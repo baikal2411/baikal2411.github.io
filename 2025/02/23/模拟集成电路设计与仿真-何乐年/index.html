@@ -138,7 +138,7 @@
 <meta property="og:image" content="https://baikal2411.github.io/2025/02/23/%E6%A8%A1%E6%8B%9F%E9%9B%86%E6%88%90%E7%94%B5%E8%B7%AF%E8%AE%BE%E8%AE%A1%E4%B8%8E%E4%BB%BF%E7%9C%9F-%E4%BD%95%E4%B9%90%E5%B9%B4/image-20250223210226710.png">
 <meta property="og:image" content="https://baikal2411.github.io/2025/02/23/%E6%A8%A1%E6%8B%9F%E9%9B%86%E6%88%90%E7%94%B5%E8%B7%AF%E8%AE%BE%E8%AE%A1%E4%B8%8E%E4%BB%BF%E7%9C%9F-%E4%BD%95%E4%B9%90%E5%B9%B4/image-20250223210432359.png">
 <meta property="article:published_time" content="2025-02-23T04:51:20.000Z">
-<meta property="article:modified_time" content="2025-02-23T13:14:47.288Z">
+<meta property="article:modified_time" content="2025-02-23T13:25:47.509Z">
 <meta property="article:author" content="Liyuan Zha">
 <meta property="article:tag" content="模拟集成电路理论">
 <meta name="twitter:card" content="summary">
@@ -432,7 +432,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1.9k 字
+                  2k 字
                 </span>
               
 
@@ -579,8 +579,8 @@ value设置为1，选第一次falling的时候）</p>
 <p>在1、反馈网络不含频率分量；2、单位增益带宽频率内只有一个极点的情况下，闭环系统的3dB带宽与运放的单位增益带宽相等！</p>
 <p>将放大器的反相输入端和输出端连接使负反馈系统的闭环增益为1（输出跟随输入），使用vpulse元件模拟同相输入端的输入脉冲；</p>
 <figure>
-<img src="/2025/02/23/%E6%A8%A1%E6%8B%9F%E9%9B%86%E6%88%90%E7%94%B5%E8%B7%AF%E8%AE%BE%E8%AE%A1%E4%B8%8E%E4%BB%BF%E7%9C%9F-%E4%BD%95%E4%B9%90%E5%B9%B4/image-20250223193004296.png" alt="image-20250223193004296">
-<figcaption aria-hidden="true">image-20250223193004296</figcaption>
+<img src="/2025/02/23/%E6%A8%A1%E6%8B%9F%E9%9B%86%E6%88%90%E7%94%B5%E8%B7%AF%E8%AE%BE%E8%AE%A1%E4%B8%8E%E4%BB%BF%E7%9C%9F-%E4%BD%95%E4%B9%90%E5%B9%B4/image-20250223193004296.png" alt="运放带宽测试图">
+<figcaption aria-hidden="true">运放带宽测试图</figcaption>
 </figure>
 <p>使用settlingtime函数计算建立时间，误差不超过2%，结果如下图所示：</p>
 <p><img src="/2025/02/23/%E6%A8%A1%E6%8B%9F%E9%9B%86%E6%88%90%E7%94%B5%E8%B7%AF%E8%AE%BE%E8%AE%A1%E4%B8%8E%E4%BB%BF%E7%9C%9F-%E4%BD%95%E4%B9%90%E5%B9%B4/image-20250223193315510.png" alt="image-20250223193315510" style="zoom:50%;"></p>
@@ -593,8 +593,8 @@ value设置为1，选第一次falling的时候）</p>
 </ul>
 <p>令单位增益负反馈系统驱动3pF的电容：</p>
 <figure>
-<img src="/2025/02/23/%E6%A8%A1%E6%8B%9F%E9%9B%86%E6%88%90%E7%94%B5%E8%B7%AF%E8%AE%BE%E8%AE%A1%E4%B8%8E%E4%BB%BF%E7%9C%9F-%E4%BD%95%E4%B9%90%E5%B9%B4/image-20250223195556254.png" alt="image-20250223195556254">
-<figcaption aria-hidden="true">image-20250223195556254</figcaption>
+<img src="/2025/02/23/%E6%A8%A1%E6%8B%9F%E9%9B%86%E6%88%90%E7%94%B5%E8%B7%AF%E8%AE%BE%E8%AE%A1%E4%B8%8E%E4%BB%BF%E7%9C%9F-%E4%BD%95%E4%B9%90%E5%B9%B4/image-20250223195556254.png" alt="转换速率测试图">
+<figcaption aria-hidden="true">转换速率测试图</figcaption>
 </figure>
 <p>输出电压在跳变后的一段时间内并没有按照指数规律变化，而是具有<strong>斜率不变</strong>的特性，使用slewrate函数进行建立时间的计算。</p>
 <p>为什么会产生这样的曲线？</p>
@@ -608,8 +608,8 @@ V\)</span>足够大或者足够小（负数）时，右下角/左下角的晶体
 等于尾电流<span class="math inline">\(I_{bias}\)</span>，所以<strong>斜率不变</strong>（<span class="math inline">\(dQ/dt = C_LdV/dt \rightarrow
 dV/dt=Iss/C_L\)</span>)，当输出电压接近<span class="math inline">\(v_{in}\)</span>时管子才重新导通，电路回到线性工作状态。</p>
 <figure>
-<img src="/2025/02/23/%E6%A8%A1%E6%8B%9F%E9%9B%86%E6%88%90%E7%94%B5%E8%B7%AF%E8%AE%BE%E8%AE%A1%E4%B8%8E%E4%BB%BF%E7%9C%9F-%E4%BD%95%E4%B9%90%E5%B9%B4/image-20250223202255837.png" alt="image-20250223202255837">
-<figcaption aria-hidden="true">image-20250223202255837</figcaption>
+<img src="/2025/02/23/%E6%A8%A1%E6%8B%9F%E9%9B%86%E6%88%90%E7%94%B5%E8%B7%AF%E8%AE%BE%E8%AE%A1%E4%B8%8E%E4%BB%BF%E7%9C%9F-%E4%BD%95%E4%B9%90%E5%B9%B4/image-20250223202255837.png" alt="原理分析图">
+<figcaption aria-hidden="true">原理分析图</figcaption>
 </figure>
 <ul>
 <li>共模抑制比，这里定义<span class="math inline">\(A_{cm}=\frac{v_{out}}{v_{in,cm}}\)</span></li>
@@ -619,13 +619,13 @@ dV/dt=Iss/C_L\)</span>)，当输出电压接近<span class="math inline">\(v_{in
 -(r_{o3}//r_{o1})(1+2g_{m1}Rss)/r_{o3}\)</span></p>
 <p>实际测量时，可以直接获得运算放大器的共模抑制比,而不需要分别求出运算放大器的差模和共模增益运算放大器连接成单位增益负反馈的形式,在运算放大器的同相和反相输入端加上相同的小信号电压<span class="math inline">\(v_{CM}\)</span></p>
 <figure>
-<img src="/2025/02/23/%E6%A8%A1%E6%8B%9F%E9%9B%86%E6%88%90%E7%94%B5%E8%B7%AF%E8%AE%BE%E8%AE%A1%E4%B8%8E%E4%BB%BF%E7%9C%9F-%E4%BD%95%E4%B9%90%E5%B9%B4/image-20250223204034260.png" alt="image-20250223204034260">
-<figcaption aria-hidden="true">image-20250223204034260</figcaption>
+<img src="/2025/02/23/%E6%A8%A1%E6%8B%9F%E9%9B%86%E6%88%90%E7%94%B5%E8%B7%AF%E8%AE%BE%E8%AE%A1%E4%B8%8E%E4%BB%BF%E7%9C%9F-%E4%BD%95%E4%B9%90%E5%B9%B4/image-20250223204034260.png" alt="共模分析原理图">
+<figcaption aria-hidden="true">共模分析原理图</figcaption>
 </figure>
 <p>由于输入的<span class="math inline">\(v_{CM}=1\)</span>所以直接对结果取倒数即可！</p>
 <figure>
-<img src="/2025/02/23/%E6%A8%A1%E6%8B%9F%E9%9B%86%E6%88%90%E7%94%B5%E8%B7%AF%E8%AE%BE%E8%AE%A1%E4%B8%8E%E4%BB%BF%E7%9C%9F-%E4%BD%95%E4%B9%90%E5%B9%B4/image-20250223205053488.png" alt="image-20250223205053488">
-<figcaption aria-hidden="true">image-20250223205053488</figcaption>
+<img src="/2025/02/23/%E6%A8%A1%E6%8B%9F%E9%9B%86%E6%88%90%E7%94%B5%E8%B7%AF%E8%AE%BE%E8%AE%A1%E4%B8%8E%E4%BB%BF%E7%9C%9F-%E4%BD%95%E4%B9%90%E5%B9%B4/image-20250223205053488.png" alt="共模抑制测试图">
+<figcaption aria-hidden="true">共模抑制测试图</figcaption>
 </figure>
 <ul>
 <li>电源电压抑制比</li>
@@ -635,12 +635,12 @@ PSRR=\frac{A_v | v_{dd=0}}{A_{DD}| v_{in=0}}
 \]</span></p>
 <p>管子采用二极管连接,并且流过左上角管的电流是固定的,因此管的栅源电压是定值,从而使得<span class="math inline">\(X\)</span>点的电位相对于<span class="math inline">\(VDD\)</span>钳制,因此当<span class="math inline">\(Vo\)</span>变化时,<span class="math inline">\(Vx\)</span>上有相同的变化。又由于电流镜的存在,使得运算放大器在差分输入信号为零时,输出端<span class="math inline">\(Vout\)</span>和<span class="math inline">\(Vx\)</span>有相同的电位。因而<span class="math inline">\(VDD\)</span>到<span class="math inline">\(Vout\)</span>的增益近似为1。</p>
 <figure>
-<img src="/2025/02/23/%E6%A8%A1%E6%8B%9F%E9%9B%86%E6%88%90%E7%94%B5%E8%B7%AF%E8%AE%BE%E8%AE%A1%E4%B8%8E%E4%BB%BF%E7%9C%9F-%E4%BD%95%E4%B9%90%E5%B9%B4/image-20250223210226710.png" alt="image-20250223210226710">
-<figcaption aria-hidden="true">image-20250223210226710</figcaption>
+<img src="/2025/02/23/%E6%A8%A1%E6%8B%9F%E9%9B%86%E6%88%90%E7%94%B5%E8%B7%AF%E8%AE%BE%E8%AE%A1%E4%B8%8E%E4%BB%BF%E7%9C%9F-%E4%BD%95%E4%B9%90%E5%B9%B4/image-20250223210226710.png" alt="电源电压的影响">
+<figcaption aria-hidden="true">电源电压的影响</figcaption>
 </figure>
 <figure>
-<img src="/2025/02/23/%E6%A8%A1%E6%8B%9F%E9%9B%86%E6%88%90%E7%94%B5%E8%B7%AF%E8%AE%BE%E8%AE%A1%E4%B8%8E%E4%BB%BF%E7%9C%9F-%E4%BD%95%E4%B9%90%E5%B9%B4/image-20250223210432359.png" alt="image-20250223210432359">
-<figcaption aria-hidden="true">image-20250223210432359</figcaption>
+<img src="/2025/02/23/%E6%A8%A1%E6%8B%9F%E9%9B%86%E6%88%90%E7%94%B5%E8%B7%AF%E8%AE%BE%E8%AE%A1%E4%B8%8E%E4%BB%BF%E7%9C%9F-%E4%BD%95%E4%B9%90%E5%B9%B4/image-20250223210432359.png" alt="电源电压抑制测试图">
+<figcaption aria-hidden="true">电源电压抑制测试图</figcaption>
 </figure>
 <h3><span id="运算放大器的使用举例">运算放大器的使用举例</span></h3>
 <p>比例运算电路：反相输入，同相输入，差分输入</p>

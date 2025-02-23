@@ -1,58 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>太赫兹前沿进展</title>
-    <url>/2025/02/21/%E5%A4%AA%E8%B5%AB%E5%85%B9%E5%89%8D%E6%B2%BF%E8%BF%9B%E5%B1%95/</url>
-    <content><![CDATA[<span id="more"></span>
-<h1><span id="太赫兹新材料与前沿技术">太赫兹新材料与前沿技术</span></h1>
-<ul>
-<li>太赫兹源的产生，与物质的相互作用</li>
-<li>材料体系的太赫兹电磁响应性质，太赫兹波束调控技术</li>
-<li>太赫兹技术在成像和通信方面的应用
-30%平时成绩，30%专题研讨，40%课程研究报告</li>
-</ul>
-<h2><span id="lecture1-绪论">Lecture1 绪论</span></h2>
-<p>5G通信的频率范围：sub6GHz FR2(10-20GHz)</p>
-<p>毫米波的频率范围：30G-300GHz 太赫兹频率的范围：100GHz - 10THz</p>
-<p>毫米波<span class="math inline">\(\rightarrow\)</span>太赫兹<span class="math inline">\(\rightarrow\)</span>红外线</p>
-<p>成像：<span class="math inline">\(\underline{分辨率}\)</span></p>
-<p>电子学和光子学的<strong>重叠区</strong></p>
-<h3><span id="太赫兹辐射的特点">太赫兹辐射的特点</span></h3>
-<ul>
-<li><p>穿透性：对于大部分介质材料，非极性液体具有良好的穿透性，波长<span class="math inline">\(&gt;&gt;\)</span>空气的悬浮物，散射远小于光频和红外频段的电磁辐射</p></li>
-<li><p>金属：强反射（微波找到金属板上：强反射） 水：强吸收（极性液体）
-墙体：可以穿透过</p></li>
-<li><p>安全性：光子能量只有毫电子伏特，不会引起<strong>电离反应</strong>，不会像<strong>X射线</strong>一样（keV)；安检仪器(探测金属)</p></li>
-<li><p>光谱分辨的本领：大量的分子，尤其有机分子，其振动和转动跃迁引起的特征吸收峰很多处于THz频段，即生物分子的”<strong>指纹吸收峰</strong>“</p></li>
-<li><p>相较于微波，其频率高，波长短，传输方向性好，作为通信载体时信息容量大，应用于成像时，空间分辨率更高！</p></li>
-</ul>
-<p>Photonic THz Transmitter &amp; Electronic THz Receiver</p>
-<h3><span id="太赫兹技术的发展历程">太赫兹技术的发展历程</span></h3>
-<p>10w篇文献，分布在近50年</p>
-<p><em>THz Gap</em>：微波和红外线之间的研究<strong>空白</strong>，$Very
- Limited  Tech  Enablers $</p>
-<p>20年代70年代：研究了Si和GaAs当中的光电导开关过程，脉冲宽度为ps</p>
-<p>90年代：光电导天线和飞秒激光技术的发展，太赫兹脉冲辐射的产生技术相对成熟</p>
-<p>95年：uW量级 混频技术 量子级联技术和真空电子学的太赫兹辐射源</p>
-<p>2002年：量子级联技术：液氮温度，4.4THz量子级联激光输出</p>
-<p>基于真空电子学的太赫兹辐射源，比如自由电子激光器，电子回旋管，BWO</p>
-<p>太赫兹光谱仪，成像仪，矢网扩频设备等（信息大楼一楼的暗室）</p>
-<h3><span id="研究方向的分类与应用方向">研究方向的分类与应用方向</span></h3>
-<p>辐射源、探测器、功能器件</p>
-<p>安检成像 无线通信 生化检测</p>
-<h3><span id="新型太赫兹材料">新型太赫兹材料</span></h3>
-<p>太赫兹透明材料，石墨烯材料，液晶材料，铁氧体材料，电磁超材料等在THz频段具有新颖的电磁性质</p>
-<p>吸波器 移相器 滤波器 极化调控等</p>
-]]></content>
-      <categories>
-        <category>太赫兹理论</category>
-      </categories>
-      <tags>
-        <tag>本科研讨课</tag>
-        <tag>太赫兹理论</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>模拟集成电路设计与仿真_何乐年</title>
     <url>/2025/02/23/%E6%A8%A1%E6%8B%9F%E9%9B%86%E6%88%90%E7%94%B5%E8%B7%AF%E8%AE%BE%E8%AE%A1%E4%B8%8E%E4%BB%BF%E7%9C%9F-%E4%BD%95%E4%B9%90%E5%B9%B4/</url>
     <content><![CDATA[<h1><span id="模拟集成电路设计与仿真">模拟集成电路设计与仿真</span></h1>
@@ -161,8 +109,8 @@ value设置为1，选第一次falling的时候）</p>
 <p>在1、反馈网络不含频率分量；2、单位增益带宽频率内只有一个极点的情况下，闭环系统的3dB带宽与运放的单位增益带宽相等！</p>
 <p>将放大器的反相输入端和输出端连接使负反馈系统的闭环增益为1（输出跟随输入），使用vpulse元件模拟同相输入端的输入脉冲；</p>
 <figure>
-<img src="/2025/02/23/%E6%A8%A1%E6%8B%9F%E9%9B%86%E6%88%90%E7%94%B5%E8%B7%AF%E8%AE%BE%E8%AE%A1%E4%B8%8E%E4%BB%BF%E7%9C%9F-%E4%BD%95%E4%B9%90%E5%B9%B4/image-20250223193004296.png" alt="image-20250223193004296">
-<figcaption aria-hidden="true">image-20250223193004296</figcaption>
+<img src="/2025/02/23/%E6%A8%A1%E6%8B%9F%E9%9B%86%E6%88%90%E7%94%B5%E8%B7%AF%E8%AE%BE%E8%AE%A1%E4%B8%8E%E4%BB%BF%E7%9C%9F-%E4%BD%95%E4%B9%90%E5%B9%B4/image-20250223193004296.png" alt="运放带宽测试图">
+<figcaption aria-hidden="true">运放带宽测试图</figcaption>
 </figure>
 <p>使用settlingtime函数计算建立时间，误差不超过2%，结果如下图所示：</p>
 <p><img src="/2025/02/23/%E6%A8%A1%E6%8B%9F%E9%9B%86%E6%88%90%E7%94%B5%E8%B7%AF%E8%AE%BE%E8%AE%A1%E4%B8%8E%E4%BB%BF%E7%9C%9F-%E4%BD%95%E4%B9%90%E5%B9%B4/image-20250223193315510.png" alt="image-20250223193315510" style="zoom:50%;"></p>
@@ -175,8 +123,8 @@ value设置为1，选第一次falling的时候）</p>
 </ul>
 <p>令单位增益负反馈系统驱动3pF的电容：</p>
 <figure>
-<img src="/2025/02/23/%E6%A8%A1%E6%8B%9F%E9%9B%86%E6%88%90%E7%94%B5%E8%B7%AF%E8%AE%BE%E8%AE%A1%E4%B8%8E%E4%BB%BF%E7%9C%9F-%E4%BD%95%E4%B9%90%E5%B9%B4/image-20250223195556254.png" alt="image-20250223195556254">
-<figcaption aria-hidden="true">image-20250223195556254</figcaption>
+<img src="/2025/02/23/%E6%A8%A1%E6%8B%9F%E9%9B%86%E6%88%90%E7%94%B5%E8%B7%AF%E8%AE%BE%E8%AE%A1%E4%B8%8E%E4%BB%BF%E7%9C%9F-%E4%BD%95%E4%B9%90%E5%B9%B4/image-20250223195556254.png" alt="转换速率测试图">
+<figcaption aria-hidden="true">转换速率测试图</figcaption>
 </figure>
 <p>输出电压在跳变后的一段时间内并没有按照指数规律变化，而是具有<strong>斜率不变</strong>的特性，使用slewrate函数进行建立时间的计算。</p>
 <p>为什么会产生这样的曲线？</p>
@@ -190,8 +138,8 @@ V\)</span>足够大或者足够小（负数）时，右下角/左下角的晶体
 等于尾电流<span class="math inline">\(I_{bias}\)</span>，所以<strong>斜率不变</strong>（<span class="math inline">\(dQ/dt = C_LdV/dt \rightarrow
 dV/dt=Iss/C_L\)</span>)，当输出电压接近<span class="math inline">\(v_{in}\)</span>时管子才重新导通，电路回到线性工作状态。</p>
 <figure>
-<img src="/2025/02/23/%E6%A8%A1%E6%8B%9F%E9%9B%86%E6%88%90%E7%94%B5%E8%B7%AF%E8%AE%BE%E8%AE%A1%E4%B8%8E%E4%BB%BF%E7%9C%9F-%E4%BD%95%E4%B9%90%E5%B9%B4/image-20250223202255837.png" alt="image-20250223202255837">
-<figcaption aria-hidden="true">image-20250223202255837</figcaption>
+<img src="/2025/02/23/%E6%A8%A1%E6%8B%9F%E9%9B%86%E6%88%90%E7%94%B5%E8%B7%AF%E8%AE%BE%E8%AE%A1%E4%B8%8E%E4%BB%BF%E7%9C%9F-%E4%BD%95%E4%B9%90%E5%B9%B4/image-20250223202255837.png" alt="原理分析图">
+<figcaption aria-hidden="true">原理分析图</figcaption>
 </figure>
 <ul>
 <li>共模抑制比，这里定义<span class="math inline">\(A_{cm}=\frac{v_{out}}{v_{in,cm}}\)</span></li>
@@ -201,13 +149,13 @@ dV/dt=Iss/C_L\)</span>)，当输出电压接近<span class="math inline">\(v_{in
 -(r_{o3}//r_{o1})(1+2g_{m1}Rss)/r_{o3}\)</span></p>
 <p>实际测量时，可以直接获得运算放大器的共模抑制比,而不需要分别求出运算放大器的差模和共模增益运算放大器连接成单位增益负反馈的形式,在运算放大器的同相和反相输入端加上相同的小信号电压<span class="math inline">\(v_{CM}\)</span></p>
 <figure>
-<img src="/2025/02/23/%E6%A8%A1%E6%8B%9F%E9%9B%86%E6%88%90%E7%94%B5%E8%B7%AF%E8%AE%BE%E8%AE%A1%E4%B8%8E%E4%BB%BF%E7%9C%9F-%E4%BD%95%E4%B9%90%E5%B9%B4/image-20250223204034260.png" alt="image-20250223204034260">
-<figcaption aria-hidden="true">image-20250223204034260</figcaption>
+<img src="/2025/02/23/%E6%A8%A1%E6%8B%9F%E9%9B%86%E6%88%90%E7%94%B5%E8%B7%AF%E8%AE%BE%E8%AE%A1%E4%B8%8E%E4%BB%BF%E7%9C%9F-%E4%BD%95%E4%B9%90%E5%B9%B4/image-20250223204034260.png" alt="共模分析原理图">
+<figcaption aria-hidden="true">共模分析原理图</figcaption>
 </figure>
 <p>由于输入的<span class="math inline">\(v_{CM}=1\)</span>所以直接对结果取倒数即可！</p>
 <figure>
-<img src="/2025/02/23/%E6%A8%A1%E6%8B%9F%E9%9B%86%E6%88%90%E7%94%B5%E8%B7%AF%E8%AE%BE%E8%AE%A1%E4%B8%8E%E4%BB%BF%E7%9C%9F-%E4%BD%95%E4%B9%90%E5%B9%B4/image-20250223205053488.png" alt="image-20250223205053488">
-<figcaption aria-hidden="true">image-20250223205053488</figcaption>
+<img src="/2025/02/23/%E6%A8%A1%E6%8B%9F%E9%9B%86%E6%88%90%E7%94%B5%E8%B7%AF%E8%AE%BE%E8%AE%A1%E4%B8%8E%E4%BB%BF%E7%9C%9F-%E4%BD%95%E4%B9%90%E5%B9%B4/image-20250223205053488.png" alt="共模抑制测试图">
+<figcaption aria-hidden="true">共模抑制测试图</figcaption>
 </figure>
 <ul>
 <li>电源电压抑制比</li>
@@ -217,12 +165,12 @@ PSRR=\frac{A_v | v_{dd=0}}{A_{DD}| v_{in=0}}
 \]</span></p>
 <p>管子采用二极管连接,并且流过左上角管的电流是固定的,因此管的栅源电压是定值,从而使得<span class="math inline">\(X\)</span>点的电位相对于<span class="math inline">\(VDD\)</span>钳制,因此当<span class="math inline">\(Vo\)</span>变化时,<span class="math inline">\(Vx\)</span>上有相同的变化。又由于电流镜的存在,使得运算放大器在差分输入信号为零时,输出端<span class="math inline">\(Vout\)</span>和<span class="math inline">\(Vx\)</span>有相同的电位。因而<span class="math inline">\(VDD\)</span>到<span class="math inline">\(Vout\)</span>的增益近似为1。</p>
 <figure>
-<img src="/2025/02/23/%E6%A8%A1%E6%8B%9F%E9%9B%86%E6%88%90%E7%94%B5%E8%B7%AF%E8%AE%BE%E8%AE%A1%E4%B8%8E%E4%BB%BF%E7%9C%9F-%E4%BD%95%E4%B9%90%E5%B9%B4/image-20250223210226710.png" alt="image-20250223210226710">
-<figcaption aria-hidden="true">image-20250223210226710</figcaption>
+<img src="/2025/02/23/%E6%A8%A1%E6%8B%9F%E9%9B%86%E6%88%90%E7%94%B5%E8%B7%AF%E8%AE%BE%E8%AE%A1%E4%B8%8E%E4%BB%BF%E7%9C%9F-%E4%BD%95%E4%B9%90%E5%B9%B4/image-20250223210226710.png" alt="电源电压的影响">
+<figcaption aria-hidden="true">电源电压的影响</figcaption>
 </figure>
 <figure>
-<img src="/2025/02/23/%E6%A8%A1%E6%8B%9F%E9%9B%86%E6%88%90%E7%94%B5%E8%B7%AF%E8%AE%BE%E8%AE%A1%E4%B8%8E%E4%BB%BF%E7%9C%9F-%E4%BD%95%E4%B9%90%E5%B9%B4/image-20250223210432359.png" alt="image-20250223210432359">
-<figcaption aria-hidden="true">image-20250223210432359</figcaption>
+<img src="/2025/02/23/%E6%A8%A1%E6%8B%9F%E9%9B%86%E6%88%90%E7%94%B5%E8%B7%AF%E8%AE%BE%E8%AE%A1%E4%B8%8E%E4%BB%BF%E7%9C%9F-%E4%BD%95%E4%B9%90%E5%B9%B4/image-20250223210432359.png" alt="电源电压抑制测试图">
+<figcaption aria-hidden="true">电源电压抑制测试图</figcaption>
 </figure>
 <h3><span id="运算放大器的使用举例">运算放大器的使用举例</span></h3>
 <p>比例运算电路：反相输入，同相输入，差分输入</p>
@@ -234,6 +182,58 @@ PSRR=\frac{A_v | v_{dd=0}}{A_{DD}| v_{in=0}}
       </categories>
       <tags>
         <tag>模拟集成电路理论</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>太赫兹前沿进展</title>
+    <url>/2025/02/21/%E5%A4%AA%E8%B5%AB%E5%85%B9%E5%89%8D%E6%B2%BF%E8%BF%9B%E5%B1%95/</url>
+    <content><![CDATA[<span id="more"></span>
+<h1><span id="太赫兹新材料与前沿技术">太赫兹新材料与前沿技术</span></h1>
+<ul>
+<li>太赫兹源的产生，与物质的相互作用</li>
+<li>材料体系的太赫兹电磁响应性质，太赫兹波束调控技术</li>
+<li>太赫兹技术在成像和通信方面的应用
+30%平时成绩，30%专题研讨，40%课程研究报告</li>
+</ul>
+<h2><span id="lecture1-绪论">Lecture1 绪论</span></h2>
+<p>5G通信的频率范围：sub6GHz FR2(10-20GHz)</p>
+<p>毫米波的频率范围：30G-300GHz 太赫兹频率的范围：100GHz - 10THz</p>
+<p>毫米波<span class="math inline">\(\rightarrow\)</span>太赫兹<span class="math inline">\(\rightarrow\)</span>红外线</p>
+<p>成像：<span class="math inline">\(\underline{分辨率}\)</span></p>
+<p>电子学和光子学的<strong>重叠区</strong></p>
+<h3><span id="太赫兹辐射的特点">太赫兹辐射的特点</span></h3>
+<ul>
+<li><p>穿透性：对于大部分介质材料，非极性液体具有良好的穿透性，波长<span class="math inline">\(&gt;&gt;\)</span>空气的悬浮物，散射远小于光频和红外频段的电磁辐射</p></li>
+<li><p>金属：强反射（微波找到金属板上：强反射） 水：强吸收（极性液体）
+墙体：可以穿透过</p></li>
+<li><p>安全性：光子能量只有毫电子伏特，不会引起<strong>电离反应</strong>，不会像<strong>X射线</strong>一样（keV)；安检仪器(探测金属)</p></li>
+<li><p>光谱分辨的本领：大量的分子，尤其有机分子，其振动和转动跃迁引起的特征吸收峰很多处于THz频段，即生物分子的”<strong>指纹吸收峰</strong>“</p></li>
+<li><p>相较于微波，其频率高，波长短，传输方向性好，作为通信载体时信息容量大，应用于成像时，空间分辨率更高！</p></li>
+</ul>
+<p>Photonic THz Transmitter &amp; Electronic THz Receiver</p>
+<h3><span id="太赫兹技术的发展历程">太赫兹技术的发展历程</span></h3>
+<p>10w篇文献，分布在近50年</p>
+<p><em>THz Gap</em>：微波和红外线之间的研究<strong>空白</strong>，$Very
+ Limited  Tech  Enablers $</p>
+<p>20年代70年代：研究了Si和GaAs当中的光电导开关过程，脉冲宽度为ps</p>
+<p>90年代：光电导天线和飞秒激光技术的发展，太赫兹脉冲辐射的产生技术相对成熟</p>
+<p>95年：uW量级 混频技术 量子级联技术和真空电子学的太赫兹辐射源</p>
+<p>2002年：量子级联技术：液氮温度，4.4THz量子级联激光输出</p>
+<p>基于真空电子学的太赫兹辐射源，比如自由电子激光器，电子回旋管，BWO</p>
+<p>太赫兹光谱仪，成像仪，矢网扩频设备等（信息大楼一楼的暗室）</p>
+<h3><span id="研究方向的分类与应用方向">研究方向的分类与应用方向</span></h3>
+<p>辐射源、探测器、功能器件</p>
+<p>安检成像 无线通信 生化检测</p>
+<h3><span id="新型太赫兹材料">新型太赫兹材料</span></h3>
+<p>太赫兹透明材料，石墨烯材料，液晶材料，铁氧体材料，电磁超材料等在THz频段具有新颖的电磁性质</p>
+<p>吸波器 移相器 滤波器 极化调控等</p>
+]]></content>
+      <categories>
+        <category>太赫兹理论</category>
+      </categories>
+      <tags>
+        <tag>本科研讨课</tag>
+        <tag>太赫兹理论</tag>
       </tags>
   </entry>
 </search>
