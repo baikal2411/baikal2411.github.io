@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>太赫兹前沿进展</title>
+    <url>/2025/02/21/%E5%A4%AA%E8%B5%AB%E5%85%B9%E5%89%8D%E6%B2%BF%E8%BF%9B%E5%B1%95/</url>
+    <content><![CDATA[<h1 id="太赫兹新材料与前沿技术">太赫兹新材料与前沿技术</h1>
+<ul>
+<li>太赫兹源的产生，与物质的相互作用</li>
+<li>材料体系的太赫兹电磁响应性质，太赫兹波束调控技术</li>
+<li>太赫兹技术在成像和通信方面的应用 <span id="more"></span>
+30%平时成绩，30%专题研讨，40%课程研究报告</li>
+</ul>
+<h2 id="lecture1-绪论">Lecture1 绪论</h2>
+<p>5G通信的频率范围：sub6GHz FR2(10-20GHz)</p>
+<p>毫米波的频率范围：30G-300GHz 太赫兹频率的范围：100GHz - 10THz</p>
+<p>毫米波<span class="math inline">\(\rightarrow\)</span>太赫兹<span class="math inline">\(\rightarrow\)</span>红外线</p>
+<p>成像：<span class="math inline">\(\underline{分辨率}\)</span></p>
+<p>电子学和光子学的<strong>重叠区</strong></p>
+<h3 id="太赫兹辐射的特点">太赫兹辐射的特点</h3>
+<ul>
+<li><p>穿透性：对于大部分介质材料，非极性液体具有良好的穿透性，波长<span class="math inline">\(&gt;&gt;\)</span>空气的悬浮物，散射远小于光频和红外频段的电磁辐射</p></li>
+<li><p>金属：强反射（微波找到金属板上：强反射） 水：强吸收（极性液体）
+墙体：可以穿透过</p></li>
+<li><p>安全性：光子能量只有毫电子伏特，不会引起<strong>电离反应</strong>，不会像<strong>X射线</strong>一样（keV)；安检仪器(探测金属)</p></li>
+<li><p>光谱分辨的本领：大量的分子，尤其有机分子，其振动和转动跃迁引起的特征吸收峰很多处于THz频段，即生物分子的”<strong>指纹吸收峰</strong>“</p></li>
+<li><p>相较于微波，其频率高，波长短，传输方向性好，作为通信载体时信息容量大，应用于成像时，空间分辨率更高！</p></li>
+</ul>
+<p>Photonic THz Transmitter &amp; Electronic THz Receiver</p>
+<h3 id="太赫兹技术的发展历程">太赫兹技术的发展历程</h3>
+<p>10w篇文献，分布在近50年</p>
+<p><em>THz Gap</em>：微波和红外线之间的研究<strong>空白</strong>，$Very
+ Limited  Tech  Enablers $</p>
+<p>20年代70年代：研究了Si和GaAs当中的光电导开关过程，脉冲宽度为ps</p>
+<p>90年代：光电导天线和飞秒激光技术的发展，太赫兹脉冲辐射的产生技术相对成熟</p>
+<p>95年：uW量级 混频技术 量子级联技术和真空电子学的太赫兹辐射源</p>
+<p>2002年：量子级联技术：液氮温度，4.4THz量子级联激光输出</p>
+<p>基于真空电子学的太赫兹辐射源，比如自由电子激光器，电子回旋管，BWO</p>
+<p>太赫兹光谱仪，成像仪，矢网扩频设备等（信息大楼一楼的暗室）</p>
+<h3 id="研究方向的分类与应用方向">研究方向的分类与应用方向</h3>
+<p>辐射源、探测器、功能器件</p>
+<p>安检成像 无线通信 生化检测</p>
+<h3 id="新型太赫兹材料">新型太赫兹材料</h3>
+<p>太赫兹透明材料，石墨烯材料，液晶材料，铁氧体材料，电磁超材料等在THz频段具有新颖的电磁性质</p>
+<p>吸波器 移相器 滤波器 极化调控等</p>
+]]></content>
+      <categories>
+        <category>研讨</category>
+      </categories>
+      <tags>
+        <tag>本科研讨课</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>模拟集成电路设计与仿真_何乐年</title>
+    <url>/2025/02/23/%E6%A8%A1%E6%8B%9F%E9%9B%86%E6%88%90%E7%94%B5%E8%B7%AF%E8%AE%BE%E8%AE%A1%E4%B8%8E%E4%BB%BF%E7%9C%9F-%E4%BD%95%E4%B9%90%E5%B9%B4/</url>
+    <content><![CDATA[<h1 id="模拟集成电路设计与仿真">模拟集成电路设计与仿真</h1>
+<span id="more"></span>
+<h2 id="chapter-ⅴ">Chapter Ⅴ</h2>
+<h3 id="负反馈系统">负反馈系统</h3>
+<p><img src="/2025/02/23/%E6%A8%A1%E6%8B%9F%E9%9B%86%E6%88%90%E7%94%B5%E8%B7%AF%E8%AE%BE%E8%AE%A1%E4%B8%8E%E4%BB%BF%E7%9C%9F-%E4%BD%95%E4%B9%90%E5%B9%B4/image-20250222182612859.png" alt="image-20250222182612859" style="zoom:50%;"></p>
+<blockquote>
+<p>前馈网络：<span class="math inline">\(x_o =A_v x_D\)</span>,
+反馈网络：<span class="math inline">\(x_F = \beta x_o\)</span> ,
+环路增益：<span class="math inline">\(T = A_v \beta\)</span></p>
+</blockquote>
+<p>当环路增益<span class="math inline">\(T\)</span>趋于时得到理想的闭环增益： <span class="math display">\[
+A_{ideal} = {lim}_{T \rightarrow \infty}\frac{A_v}{1+A_v \beta} =
+\frac{1}{\beta}
+\]</span> 说明理想情况下的闭环增益仅仅由反馈网络决定！ <span class="math display">\[
+A = A_{ideal} \frac{1}{1+1/T} = A_{ideal}(1-\epsilon)
+\]</span> 并且：<span class="math inline">\(x_D=\frac{1}{1+T}x_I\)</span> , <span class="math inline">\(x_F = \frac{1}{1+1/T}x_I\)</span></p>
+<p>所以环路增益<span class="math inline">\(T \rightarrow
+\infty\)</span>时误差信号几乎为0，运放的同相和反相输入端电位相同，也即虚短虚断！</p>
+<p>闭环增益与开环增益的关系: <span class="math display">\[
+\frac{dA}{A} = \frac{1}{1+T}\frac{d A_v}{A_v}
+\]</span> 所以环路增益越大，闭环增益对开环增益的变化越不敏感！</p>
+<blockquote>
+<p>使用环路切断的方法确定闭环增益</p>
+</blockquote>
+<p><img src="/2025/02/23/%E6%A8%A1%E6%8B%9F%E9%9B%86%E6%88%90%E7%94%B5%E8%B7%AF%E8%AE%BE%E8%AE%A1%E4%B8%8E%E4%BB%BF%E7%9C%9F-%E4%BD%95%E4%B9%90%E5%B9%B4/image-20250222183836903.png" alt="image-20250222183836903" style="zoom:33%;">
+<span class="math display">\[
+T = \frac{-v_F}{v_T}
+\]</span> 注意，反馈系数对环路增益的影响非常大，比如等量的增大/减小</p>
+<h3 id="运算放大器的非线性简略分析">运算放大器的非线性简略分析</h3>
+<p>使用可编程的压控电压源pvcvs：<span class="math inline">\(v_{out} =
+Gain(a_0+a_1v_{in}+a_2v_{in}^2+...)\)</span></p>
+<p><img src="/2025/02/23/%E6%A8%A1%E6%8B%9F%E9%9B%86%E6%88%90%E7%94%B5%E8%B7%AF%E8%AE%BE%E8%AE%A1%E4%B8%8E%E4%BB%BF%E7%9C%9F-%E4%BD%95%E4%B9%90%E5%B9%B4/image-20250222192908326.png" alt="image-20250222192908326" style="zoom: 50%;"></p>
+<p><em>闭环增益<span class="math inline">\(A =
+\frac{A_v}{1+A_v\beta}=100/(1+100/2)\approx 2\)</span></em></p>
+<p><img src="/2025/02/23/%E6%A8%A1%E6%8B%9F%E9%9B%86%E6%88%90%E7%94%B5%E8%B7%AF%E8%AE%BE%E8%AE%A1%E4%B8%8E%E4%BB%BF%E7%9C%9F-%E4%BD%95%E4%B9%90%E5%B9%B4/image-20250222192931979.png" alt="image-20250222192931979" style="zoom:50%;"></p>
+<p><em>电路的输入输出特性，因为<span class="math inline">\(v_o = A_v
+v_{in} = 2v_{in}\)</span></em></p>
+<p><img src="/2025/02/23/%E6%A8%A1%E6%8B%9F%E9%9B%86%E6%88%90%E7%94%B5%E8%B7%AF%E8%AE%BE%E8%AE%A1%E4%B8%8E%E4%BB%BF%E7%9C%9F-%E4%BD%95%E4%B9%90%E5%B9%B4/image-20250222193020390.png" alt="image-20250222193020390" style="zoom: 67%;"></p>
+<p><em>电路图如上</em></p>
+<p>”采取负反馈以后，电路的闭环增益呈现很好的线性！这是因为反馈网络是线性的，当环路增益<span class="math inline">\(A_v
+\beta\)</span>很大时（此处约为50），运算放大器的开环增益<span class="math inline">\(A_v\)</span>对于闭环增益的影响被削弱！“</p>
+<h3 id="复反馈对运放带宽的影响">复反馈对运放带宽的影响</h3>
+<p>不加入负反馈：<span class="math inline">\(A_v(s)=A_v(0)/(1+s/w_0)\)</span></p>
+<p>加入负反馈之后： <span class="math display">\[
+A(s) = \frac{A_v/(1+\beta A_v)}{1+s/((1+\beta A_v)w_0)}
+\]</span> 闭环的极点：<span class="math inline">\(\beta A_vw_0+w_0
+\approx \beta A_v w_0\)</span></p>
+<p>说明3dB带宽增加了<span class="math inline">\(\beta
+A_v\)</span>倍！</p>
+<p><strong>增益带宽积 = <span class="math inline">\(A_v
+w_0\)</span></strong></p>
+<h3 id="运算放大器的基本结构">运算放大器的基本结构</h3>
+<p>最简单的单端输出和双端输出的结构，低频小信号增益均是<span class="math inline">\(g_m (r_{oN}//r_{oP})\)</span></p>
+<p>缺点是增益很小（需要&gt;2000的开环增益！）经常采用套筒结构和折叠结构！</p>
+]]></content>
+      <tags>
+        <tag>经典书籍</tag>
+      </tags>
+  </entry>
+</search>
