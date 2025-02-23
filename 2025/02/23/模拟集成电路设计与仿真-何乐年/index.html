@@ -100,7 +100,7 @@
 
 
 
-  <meta name="keywords" content="经典书籍," />
+  <meta name="keywords" content="模拟集成电路理论," />
 
 
 
@@ -111,12 +111,12 @@
 
 
 
-<meta name="description" content="模拟集成电路设计与仿真">
+<meta name="description" content="这篇文章主要记录何乐年的模集书当中的重要知识点以及一些电路的仿真,软件环境使用Virtuoso IC617,以此记录对于模拟集成电路的初步学习日程.">
 <meta property="og:type" content="article">
 <meta property="og:title" content="模拟集成电路设计与仿真_何乐年">
 <meta property="og:url" content="https://baikal2411.github.io/2025/02/23/%E6%A8%A1%E6%8B%9F%E9%9B%86%E6%88%90%E7%94%B5%E8%B7%AF%E8%AE%BE%E8%AE%A1%E4%B8%8E%E4%BB%BF%E7%9C%9F-%E4%BD%95%E4%B9%90%E5%B9%B4/index.html">
 <meta property="og:site_name" content="Millimeter-wave IC Design Learning Road">
-<meta property="og:description" content="模拟集成电路设计与仿真">
+<meta property="og:description" content="这篇文章主要记录何乐年的模集书当中的重要知识点以及一些电路的仿真,软件环境使用Virtuoso IC617,以此记录对于模拟集成电路的初步学习日程.">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://baikal2411.github.io/2025/02/23/%E6%A8%A1%E6%8B%9F%E9%9B%86%E6%88%90%E7%94%B5%E8%B7%AF%E8%AE%BE%E8%AE%A1%E4%B8%8E%E4%BB%BF%E7%9C%9F-%E4%BD%95%E4%B9%90%E5%B9%B4/image-20250222182612859.png">
 <meta property="og:image" content="https://baikal2411.github.io/2025/02/23/%E6%A8%A1%E6%8B%9F%E9%9B%86%E6%88%90%E7%94%B5%E8%B7%AF%E8%AE%BE%E8%AE%A1%E4%B8%8E%E4%BB%BF%E7%9C%9F-%E4%BD%95%E4%B9%90%E5%B9%B4/image-20250222183836903.png">
@@ -124,9 +124,9 @@
 <meta property="og:image" content="https://baikal2411.github.io/2025/02/23/%E6%A8%A1%E6%8B%9F%E9%9B%86%E6%88%90%E7%94%B5%E8%B7%AF%E8%AE%BE%E8%AE%A1%E4%B8%8E%E4%BB%BF%E7%9C%9F-%E4%BD%95%E4%B9%90%E5%B9%B4/image-20250222192931979.png">
 <meta property="og:image" content="https://baikal2411.github.io/2025/02/23/%E6%A8%A1%E6%8B%9F%E9%9B%86%E6%88%90%E7%94%B5%E8%B7%AF%E8%AE%BE%E8%AE%A1%E4%B8%8E%E4%BB%BF%E7%9C%9F-%E4%BD%95%E4%B9%90%E5%B9%B4/image-20250222193020390.png">
 <meta property="article:published_time" content="2025-02-23T04:51:20.000Z">
-<meta property="article:modified_time" content="2025-02-23T08:02:31.284Z">
+<meta property="article:modified_time" content="2025-02-23T08:29:37.053Z">
 <meta property="article:author" content="Liyuan Zha">
-<meta property="article:tag" content="经典书籍">
+<meta property="article:tag" content="模拟集成电路理论">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://baikal2411.github.io/2025/02/23/%E6%A8%A1%E6%8B%9F%E9%9B%86%E6%88%90%E7%94%B5%E8%B7%AF%E8%AE%BE%E8%AE%A1%E4%B8%8E%E4%BB%BF%E7%9C%9F-%E4%BD%95%E4%B9%90%E5%B9%B4/image-20250222182612859.png">
 
@@ -375,6 +375,28 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%A8%A1%E9%9B%86%E7%90%86%E8%AE%BA%E4%B8%8E%E5%AE%9E%E9%AA%8C/" itemprop="url" rel="index">
+                    <span itemprop="name">模集理论与实验</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -419,6 +441,10 @@
           
 
           
+              <div class="post-description">
+                  这篇文章主要记录何乐年的模集书当中的重要知识点以及一些电路的仿真,软件环境使用Virtuoso IC617,以此记录对于模拟集成电路的初步学习日程.
+              </div>
+          
 
         </div>
       </header>
@@ -441,7 +467,7 @@
 <ul>
 <li><a href="#负反馈系统">负反馈系统</a></li>
 <li><a href="#运算放大器的非线性简略分析">运算放大器的非线性简略分析</a></li>
-<li><a href="#复反馈对运放带宽的影响">复反馈对运放带宽的影响</a></li>
+<li><a href="#负反馈对运放带宽的影响">负反馈对运放带宽的影响</a></li>
 <li><a href="#运算放大器的基本结构">运算放大器的基本结构</a></li>
 </ul></li>
 </ul>
@@ -485,7 +511,7 @@ v_{in} = 2v_{in}\)</span></em></p>
 <p><em>电路图如上</em></p>
 <p>”采取负反馈以后，电路的闭环增益呈现很好的线性！这是因为反馈网络是线性的，当环路增益<span class="math inline">\(A_v
 \beta\)</span>很大时（此处约为50），运算放大器的开环增益<span class="math inline">\(A_v\)</span>对于闭环增益的影响被削弱！“</p>
-<h3><span id="复反馈对运放带宽的影响">复反馈对运放带宽的影响</span></h3>
+<h3><span id="负反馈对运放带宽的影响">负反馈对运放带宽的影响</span></h3>
 <p>不加入负反馈：<span class="math inline">\(A_v(s)=A_v(0)/(1+s/w_0)\)</span></p>
 <p>加入负反馈之后： <span class="math display">\[
 A(s) = \frac{A_v/(1+\beta A_v)}{1+s/((1+\beta A_v)w_0)}
@@ -515,7 +541,7 @@ w_0\)</span></strong></p>
       
         <div class="post-tags">
           
-            <a href="/tags/%E7%BB%8F%E5%85%B8%E4%B9%A6%E7%B1%8D/" rel="tag"># 经典书籍</a>
+            <a href="/tags/%E6%A8%A1%E6%8B%9F%E9%9B%86%E6%88%90%E7%94%B5%E8%B7%AF%E7%90%86%E8%AE%BA/" rel="tag"># 模拟集成电路理论</a>
           
         </div>
       
@@ -621,7 +647,7 @@ w_0\)</span></strong></p>
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-count">2</span>
                   <span class="site-state-item-name">categories</span>
                 </a>
               </div>
@@ -632,7 +658,7 @@ w_0\)</span></strong></p>
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">3</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>

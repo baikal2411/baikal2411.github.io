@@ -1340,7 +1340,7 @@ pre .javascript .function {
   .posts-collapse .post-meta {
     display: block;
     width: auto;
-    text-align: left;
+    text-align: center;
   }
 }
 .posts-collapse {
@@ -1812,7 +1812,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #ff0d26;
+  background: #627d86;
 }
 .links-of-blogroll {
   font-size: 13px;
