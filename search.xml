@@ -65,6 +65,8 @@
 <li><a href="#运算放大器的非线性简略分析">运算放大器的非线性简略分析</a></li>
 <li><a href="#负反馈对运放带宽的影响">负反馈对运放带宽的影响</a></li>
 <li><a href="#运算放大器的基本结构">运算放大器的基本结构</a></li>
+<li><a href="#运算放大器的性能">运算放大器的性能</a></li>
+<li><a href="#运算放大器的使用举例">运算放大器的使用举例</a></li>
 </ul></li>
 </ul>
 <!-- tocstop -->
@@ -120,6 +122,112 @@ w_0\)</span></strong></p>
 <h3><span id="运算放大器的基本结构">运算放大器的基本结构</span></h3>
 <p>最简单的单端输出和双端输出的结构，低频小信号增益均是<span class="math inline">\(g_m (r_{oN}//r_{oP})\)</span></p>
 <p>缺点是增益很小（需要&gt;2000的开环增益！）经常采用套筒结构和折叠结构！</p>
+<p>缺点是增益很小（需要&gt;2000的开环增益！）经常采用套筒结构和折叠结构！</p>
+<ul>
+<li><strong>套筒结构：</strong>（以下是单端输出和差动输出的套筒式）</li>
+</ul>
+<p><img src="/2025/02/23/%E6%A8%A1%E6%8B%9F%E9%9B%86%E6%88%90%E7%94%B5%E8%B7%AF%E8%AE%BE%E8%AE%A1%E4%B8%8E%E4%BB%BF%E7%9C%9F-%E4%BD%95%E4%B9%90%E5%B9%B4/image-20250223164250148.png" alt="image-20250223164250148" style="zoom:50%;"></p>
+<p>也即采用共源共栅的结构，其小信号增益为： <span class="math display">\[
+A_v = g_{m1}[(g_{m3}+g_{mb3})r_{o1}r_{o3}//(g_{m5}+g_{mb5})r_{o5}r_{o7}]
+\]</span>
+提高了增益，坏处是输入范围的减少和对应输出摆幅的减小，当尾电流源较大/MOS管的尺寸较小时，输入电压的范围很小！</p>
+<ul>
+<li><strong>折叠结构</strong>（全差分折叠/单端输出折叠结构）</li>
+</ul>
+<p>为了增大输入电压的范围，将上述的结构的上端换成PMOS管，相较于套筒式增加两个<span class="math inline">\(V_{TH1}\)</span></p>
+<p><img src="/2025/02/23/%E6%A8%A1%E6%8B%9F%E9%9B%86%E6%88%90%E7%94%B5%E8%B7%AF%E8%AE%BE%E8%AE%A1%E4%B8%8E%E4%BB%BF%E7%9C%9F-%E4%BD%95%E4%B9%90%E5%B9%B4/image-20250223165405697.png" alt="image-20250223165405697"> <span class="math display">\[
+A_v =
+g_{m1}[(g_{m3}+g_{mb3})r_{o3}(r_{o1}//r_{o5})]//[(g_{m7}+g_{mb7})r_{o7}r_{o9}]
+\]</span>
+造成折叠式运算放大器增益减小的主要原因是，由于加入了折叠管,使得共源-共栅结构中的<strong>共源管与差分级的MOS管并联</strong>,从而<strong>减小了从输出端往地端看到的等效阻抗</strong>。</p>
+<h3><span id="运算放大器的性能">运算放大器的性能</span></h3>
+<ul>
+<li>运放的增益</li>
+</ul>
+<p>使用辅助定理可以测量运放的增益！测量<span class="math inline">\(G_m\)</span>时输出接地输入端接共模偏置以及差分输入信号；测量<span class="math inline">\(R_{out}\)</span>的时候只在输入端加上共模电平，输出端加上直流电压测量系统的响应电流。在仿真环境之中，使用单端输出的差分结构进行运放增益和频率特性的测量。</p>
+<p><img src="/2025/02/23/%E6%A8%A1%E6%8B%9F%E9%9B%86%E6%88%90%E7%94%B5%E8%B7%AF%E8%AE%BE%E8%AE%A1%E4%B8%8E%E4%BB%BF%E7%9C%9F-%E4%BD%95%E4%B9%90%E5%B9%B4/image-20250223184558414.png" alt="image-20250223184558414" style="zoom:50%;"></p>
+<p><em>单端输出的差分结构运算放大器</em></p>
+<p><img src="/2025/02/23/%E6%A8%A1%E6%8B%9F%E9%9B%86%E6%88%90%E7%94%B5%E8%B7%AF%E8%AE%BE%E8%AE%A1%E4%B8%8E%E4%BB%BF%E7%9C%9F-%E4%BD%95%E4%B9%90%E5%B9%B4/image-20250223185259163.png" alt="image-20250223185259163" style="zoom:50%;"></p>
+<p><em>运算放大器增益的幅频特性，改变P管的沟道长度得出的ac仿真结果</em></p>
+<p>如何测量负反馈系统的环路增益？</p>
+<p>利用上文提到的断开环路法进行测量！</p>
+<p><img src="/2025/02/23/%E6%A8%A1%E6%8B%9F%E9%9B%86%E6%88%90%E7%94%B5%E8%B7%AF%E8%AE%BE%E8%AE%A1%E4%B8%8E%E4%BB%BF%E7%9C%9F-%E4%BD%95%E4%B9%90%E5%B9%B4/image-20250223185619155.png" alt="image-20250223185619155" style="zoom:50%;"></p>
+<p>采取合适的电容和电感，可以不影响直流工作点并且对于交流信号进行断路。</p>
+<ul>
+<li>运放的带宽</li>
+</ul>
+<p>选中波形，使用bandwidth函数进行求解3dB带宽，使用cross函数计算单位增益带宽（将cross
+value设置为1，选第一次falling的时候）</p>
+<p>在1、反馈网络不含频率分量；2、单位增益带宽频率内只有一个极点的情况下，闭环系统的3dB带宽与运放的单位增益带宽相等！</p>
+<p>将放大器的反相输入端和输出端连接使负反馈系统的闭环增益为1（输出跟随输入），使用vpulse元件模拟同相输入端的输入脉冲；</p>
+<figure>
+<img src="/2025/02/23/%E6%A8%A1%E6%8B%9F%E9%9B%86%E6%88%90%E7%94%B5%E8%B7%AF%E8%AE%BE%E8%AE%A1%E4%B8%8E%E4%BB%BF%E7%9C%9F-%E4%BD%95%E4%B9%90%E5%B9%B4/image-20250223193004296.png" alt="image-20250223193004296">
+<figcaption aria-hidden="true">image-20250223193004296</figcaption>
+</figure>
+<p>使用settlingtime函数计算建立时间，误差不超过2%，结果如下图所示：</p>
+<p><img src="/2025/02/23/%E6%A8%A1%E6%8B%9F%E9%9B%86%E6%88%90%E7%94%B5%E8%B7%AF%E8%AE%BE%E8%AE%A1%E4%B8%8E%E4%BB%BF%E7%9C%9F-%E4%BD%95%E4%B9%90%E5%B9%B4/image-20250223193315510.png" alt="image-20250223193315510" style="zoom:50%;"></p>
+<ul>
+<li>相位裕度</li>
+</ul>
+<p>使用phaseMargin函数进行计算即可。</p>
+<ul>
+<li>转换速率</li>
+</ul>
+<p>令单位增益负反馈系统驱动3pF的电容：</p>
+<figure>
+<img src="/2025/02/23/%E6%A8%A1%E6%8B%9F%E9%9B%86%E6%88%90%E7%94%B5%E8%B7%AF%E8%AE%BE%E8%AE%A1%E4%B8%8E%E4%BB%BF%E7%9C%9F-%E4%BD%95%E4%B9%90%E5%B9%B4/image-20250223195556254.png" alt="image-20250223195556254">
+<figcaption aria-hidden="true">image-20250223195556254</figcaption>
+</figure>
+<p>输出电压在跳变后的一段时间内并没有按照指数规律变化，而是具有<strong>斜率不变</strong>的特性，使用slewrate函数进行建立时间的计算。</p>
+<p>为什么会产生这样的曲线？</p>
+<p>基本原理：扰动<span class="math inline">\(\Delta
+V\)</span>发生后，左下角的晶体管的漏源电流增加<span class="math inline">\(g_m \Delta
+V/2\)</span>而右下角的晶体管的电流减少相同的数值；<strong>由于镜像作用，</strong>右上角的晶体管增加<span class="math inline">\(g_m \Delta
+V/2\)</span>，从而运放提供的总的输出小信号电流为<span class="math inline">\(g_m \Delta
+V\)</span>,此电流为负载电容充电并且降低两端电流的不平衡差值。</p>
+<p>当<span class="math inline">\(\Delta
+V\)</span>足够大或者足够小（负数）时，右下角/左下角的晶体管关断，负载电容的充电电流/放电电流
+等于尾电流<span class="math inline">\(I_{bias}\)</span>，所以<strong>斜率不变</strong>（<span class="math inline">\(dQ/dt = C_LdV/dt \rightarrow
+dV/dt=Iss/C_L\)</span>)，当输出电压接近<span class="math inline">\(v_{in}\)</span>时管子才重新导通，电路回到线性工作状态。</p>
+<figure>
+<img src="/2025/02/23/%E6%A8%A1%E6%8B%9F%E9%9B%86%E6%88%90%E7%94%B5%E8%B7%AF%E8%AE%BE%E8%AE%A1%E4%B8%8E%E4%BB%BF%E7%9C%9F-%E4%BD%95%E4%B9%90%E5%B9%B4/image-20250223202255837.png" alt="image-20250223202255837">
+<figcaption aria-hidden="true">image-20250223202255837</figcaption>
+</figure>
+<ul>
+<li>共模抑制比，这里定义<span class="math inline">\(A_{cm}=\frac{v_{out}}{v_{in,cm}}\)</span></li>
+</ul>
+<p><img src="/2025/02/23/%E6%A8%A1%E6%8B%9F%E9%9B%86%E6%88%90%E7%94%B5%E8%B7%AF%E8%AE%BE%E8%AE%A1%E4%B8%8E%E4%BB%BF%E7%9C%9F-%E4%BD%95%E4%B9%90%E5%B9%B4/image-20250223203335364.png" alt="image-20250223203335364" style="zoom:50%;"></p>
+<p>定义共模抑制比<span class="math inline">\(CMRR=A_v/A_{CM} =
+-(r_{o3}//r_{o1})(1+2g_{m1}Rss)/r_{o3}\)</span></p>
+<p>实际测量时，可以直接获得运算放大器的共模抑制比,而不需要分别求出运算放大器的差模和共模增益运算放大器连接成单位增益负反馈的形式,在运算放大器的同相和反相输入端加上相同的小信号电压<span class="math inline">\(v_{CM}\)</span></p>
+<figure>
+<img src="/2025/02/23/%E6%A8%A1%E6%8B%9F%E9%9B%86%E6%88%90%E7%94%B5%E8%B7%AF%E8%AE%BE%E8%AE%A1%E4%B8%8E%E4%BB%BF%E7%9C%9F-%E4%BD%95%E4%B9%90%E5%B9%B4/image-20250223204034260.png" alt="image-20250223204034260">
+<figcaption aria-hidden="true">image-20250223204034260</figcaption>
+</figure>
+<p>由于输入的<span class="math inline">\(v_{CM}=1\)</span>所以直接对结果取倒数即可！</p>
+<figure>
+<img src="/2025/02/23/%E6%A8%A1%E6%8B%9F%E9%9B%86%E6%88%90%E7%94%B5%E8%B7%AF%E8%AE%BE%E8%AE%A1%E4%B8%8E%E4%BB%BF%E7%9C%9F-%E4%BD%95%E4%B9%90%E5%B9%B4/image-20250223205053488.png" alt="image-20250223205053488">
+<figcaption aria-hidden="true">image-20250223205053488</figcaption>
+</figure>
+<ul>
+<li>电源电压抑制比</li>
+</ul>
+<p><span class="math display">\[
+PSRR=\frac{A_v | v_{dd=0}}{A_{DD}| v_{in=0}}
+\]</span></p>
+<p>管子采用二极管连接,并且流过左上角管的电流是固定的,因此管的栅源电压是定值,从而使得<span class="math inline">\(X\)</span>点的电位相对于<span class="math inline">\(VDD\)</span>钳制,因此当<span class="math inline">\(Vo\)</span>变化时,<span class="math inline">\(Vx\)</span>上有相同的变化。又由于电流镜的存在,使得运算放大器在差分输入信号为零时,输出端<span class="math inline">\(Vout\)</span>和<span class="math inline">\(Vx\)</span>有相同的电位。因而<span class="math inline">\(VDD\)</span>到<span class="math inline">\(Vout\)</span>的增益近似为1。</p>
+<figure>
+<img src="/2025/02/23/%E6%A8%A1%E6%8B%9F%E9%9B%86%E6%88%90%E7%94%B5%E8%B7%AF%E8%AE%BE%E8%AE%A1%E4%B8%8E%E4%BB%BF%E7%9C%9F-%E4%BD%95%E4%B9%90%E5%B9%B4/image-20250223210226710.png" alt="image-20250223210226710">
+<figcaption aria-hidden="true">image-20250223210226710</figcaption>
+</figure>
+<figure>
+<img src="/2025/02/23/%E6%A8%A1%E6%8B%9F%E9%9B%86%E6%88%90%E7%94%B5%E8%B7%AF%E8%AE%BE%E8%AE%A1%E4%B8%8E%E4%BB%BF%E7%9C%9F-%E4%BD%95%E4%B9%90%E5%B9%B4/image-20250223210432359.png" alt="image-20250223210432359">
+<figcaption aria-hidden="true">image-20250223210432359</figcaption>
+</figure>
+<h3><span id="运算放大器的使用举例">运算放大器的使用举例</span></h3>
+<p>比例运算电路：反相输入，同相输入，差分输入</p>
+<p>求和运算电路：反相输入，同相输入，差分输入</p>
+<p>积分和微分运算电路，对数和指数运算电路</p>
 ]]></content>
       <categories>
         <category>模集理论与实验</category>
