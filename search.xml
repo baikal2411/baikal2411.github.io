@@ -237,4 +237,41 @@ PSRR=\frac{A_v | v_{dd=0}}{A_{DD}| v_{in=0}}
         <tag>模拟集成电路理论</tag>
       </tags>
   </entry>
+  <entry>
+    <title>硅基太赫兹源报告</title>
+    <url>/2025/03/12/%E7%A1%85%E5%9F%BA%E5%A4%AA%E8%B5%AB%E5%85%B9%E6%BA%90%E6%8A%A5%E5%91%8A/</url>
+    <content><![CDATA[<span id="more"></span>
+<p><img src="/2025/03/12/%E7%A1%85%E5%9F%BA%E5%A4%AA%E8%B5%AB%E5%85%B9%E6%BA%90%E6%8A%A5%E5%91%8A/image-20250312195743650.png" alt="image-20250312195743650" style="zoom:80%;"></p>
+<p><img src="/2025/03/12/%E7%A1%85%E5%9F%BA%E5%A4%AA%E8%B5%AB%E5%85%B9%E6%BA%90%E6%8A%A5%E5%91%8A/image-20250312195757308.png" alt="image-20250312195757308" style="zoom:80%;"></p>
+<p><img src="/2025/03/12/%E7%A1%85%E5%9F%BA%E5%A4%AA%E8%B5%AB%E5%85%B9%E6%BA%90%E6%8A%A5%E5%91%8A/image-20250312195841147.png" alt="image-20250312195841147" style="zoom:80%;"></p>
+<p><img src="/2025/03/12/%E7%A1%85%E5%9F%BA%E5%A4%AA%E8%B5%AB%E5%85%B9%E6%BA%90%E6%8A%A5%E5%91%8A/image-20250312195855016.png" alt="image-20250312195855016" style="zoom:80%;"></p>
+<p><img src="/2025/03/12/%E7%A1%85%E5%9F%BA%E5%A4%AA%E8%B5%AB%E5%85%B9%E6%BA%90%E6%8A%A5%E5%91%8A/image-20250312195909049.png" alt="image-20250312195909049" style="zoom:80%;"></p>
+<p><img src="/2025/03/12/%E7%A1%85%E5%9F%BA%E5%A4%AA%E8%B5%AB%E5%85%B9%E6%BA%90%E6%8A%A5%E5%91%8A/image-20250312195922829.png" alt="image-20250312195922829" style="zoom:80%;"></p>
+<p><img src="/2025/03/12/%E7%A1%85%E5%9F%BA%E5%A4%AA%E8%B5%AB%E5%85%B9%E6%BA%90%E6%8A%A5%E5%91%8A/image-20250312195933599.png" alt="image-20250312195933599" style="zoom:80%;"></p>
+<p><img src="/2025/03/12/%E7%A1%85%E5%9F%BA%E5%A4%AA%E8%B5%AB%E5%85%B9%E6%BA%90%E6%8A%A5%E5%91%8A/image-20250312195947896.png" alt="image-20250312195947896" style="zoom:80%;"></p>
+<p><img src="/2025/03/12/%E7%A1%85%E5%9F%BA%E5%A4%AA%E8%B5%AB%E5%85%B9%E6%BA%90%E6%8A%A5%E5%91%8A/image-20250312200010374.png" alt="image-20250312200010374" style="zoom:80%;"></p>
+<p><img src="/2025/03/12/%E7%A1%85%E5%9F%BA%E5%A4%AA%E8%B5%AB%E5%85%B9%E6%BA%90%E6%8A%A5%E5%91%8A/image-20250312200022278.png" alt="image-20250312200022278" style="zoom:80%;"></p>
+<p><img src="/2025/03/12/%E7%A1%85%E5%9F%BA%E5%A4%AA%E8%B5%AB%E5%85%B9%E6%BA%90%E6%8A%A5%E5%91%8A/image-20250312200034381.png" alt="image-20250312200034381" style="zoom:80%;"></p>
+<p><img src="/2025/03/12/%E7%A1%85%E5%9F%BA%E5%A4%AA%E8%B5%AB%E5%85%B9%E6%BA%90%E6%8A%A5%E5%91%8A/image-20250312200047645.png" alt="image-20250312200047645" style="zoom:80%;"></p>
+<p><img src="/2025/03/12/%E7%A1%85%E5%9F%BA%E5%A4%AA%E8%B5%AB%E5%85%B9%E6%BA%90%E6%8A%A5%E5%91%8A/image-20250312200058679.png" alt="image-20250312200058679" style="zoom:80%;"></p>
+<p><img src="/2025/03/12/%E7%A1%85%E5%9F%BA%E5%A4%AA%E8%B5%AB%E5%85%B9%E6%BA%90%E6%8A%A5%E5%91%8A/image-20250312200108315.png" alt="image-20250312200108315" style="zoom:80%;"></p>
+<p><img src="/2025/03/12/%E7%A1%85%E5%9F%BA%E5%A4%AA%E8%B5%AB%E5%85%B9%E6%BA%90%E6%8A%A5%E5%91%8A/image-20250312200121116.png" alt="image-20250312200121116" style="zoom:80%;"></p>
+<p><img src="/2025/03/12/%E7%A1%85%E5%9F%BA%E5%A4%AA%E8%B5%AB%E5%85%B9%E6%BA%90%E6%8A%A5%E5%91%8A/image-20250312200132377.png" alt="image-20250312200132377" style="zoom:80%;"></p>
+<p><img src="/2025/03/12/%E7%A1%85%E5%9F%BA%E5%A4%AA%E8%B5%AB%E5%85%B9%E6%BA%90%E6%8A%A5%E5%91%8A/image-20250312200141017.png" alt="image-20250312200141017" style="zoom:80%;"></p>
+<p><img src="/2025/03/12/%E7%A1%85%E5%9F%BA%E5%A4%AA%E8%B5%AB%E5%85%B9%E6%BA%90%E6%8A%A5%E5%91%8A/image-20250312200151736.png" alt="image-20250312200151736" style="zoom:80%;"></p>
+<p><img src="/2025/03/12/%E7%A1%85%E5%9F%BA%E5%A4%AA%E8%B5%AB%E5%85%B9%E6%BA%90%E6%8A%A5%E5%91%8A/image-20250312200200829.png" alt="image-20250312200200829" style="zoom:80%;"></p>
+<p><img src="/2025/03/12/%E7%A1%85%E5%9F%BA%E5%A4%AA%E8%B5%AB%E5%85%B9%E6%BA%90%E6%8A%A5%E5%91%8A/image-20250312200210944.png" alt="image-20250312200210944" style="zoom:80%;"></p>
+<p><img src="/2025/03/12/%E7%A1%85%E5%9F%BA%E5%A4%AA%E8%B5%AB%E5%85%B9%E6%BA%90%E6%8A%A5%E5%91%8A/image-20250312200220142.png" alt="image-20250312200220142" style="zoom:80%;"></p>
+<p><img src="/2025/03/12/%E7%A1%85%E5%9F%BA%E5%A4%AA%E8%B5%AB%E5%85%B9%E6%BA%90%E6%8A%A5%E5%91%8A/image-20250312200241200.png" alt="image-20250312200241200" style="zoom:80%;"></p>
+<p><img src="/2025/03/12/%E7%A1%85%E5%9F%BA%E5%A4%AA%E8%B5%AB%E5%85%B9%E6%BA%90%E6%8A%A5%E5%91%8A/image-20250312200254775.png" alt="image-20250312200254775" style="zoom:80%;"></p>
+<p><img src="/2025/03/12/%E7%A1%85%E5%9F%BA%E5%A4%AA%E8%B5%AB%E5%85%B9%E6%BA%90%E6%8A%A5%E5%91%8A/image-20250312200307138.png" alt="image-20250312200307138" style="zoom:80%;"></p>
+<p><img src="/2025/03/12/%E7%A1%85%E5%9F%BA%E5%A4%AA%E8%B5%AB%E5%85%B9%E6%BA%90%E6%8A%A5%E5%91%8A/image-20250312200315672.png" alt="image-20250312200315672" style="zoom:80%;"></p>
+<p><img src="/2025/03/12/%E7%A1%85%E5%9F%BA%E5%A4%AA%E8%B5%AB%E5%85%B9%E6%BA%90%E6%8A%A5%E5%91%8A/image-20250312200324269.png" alt="image-20250312200324269" style="zoom:80%;"></p>
+<p><img src="/2025/03/12/%E7%A1%85%E5%9F%BA%E5%A4%AA%E8%B5%AB%E5%85%B9%E6%BA%90%E6%8A%A5%E5%91%8A/image-20250312200335544.png" alt="image-20250312200335544" style="zoom:80%;"></p>
+<p><img src="/2025/03/12/%E7%A1%85%E5%9F%BA%E5%A4%AA%E8%B5%AB%E5%85%B9%E6%BA%90%E6%8A%A5%E5%91%8A/image-20250312200354841.png" alt="image-20250312200354841" style="zoom:80%;"></p>
+]]></content>
+      <tags>
+        <tag>课程报告</tag>
+      </tags>
+  </entry>
 </search>
