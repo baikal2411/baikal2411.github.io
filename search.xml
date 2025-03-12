@@ -1,13 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>太赫兹前沿进展</title>
+    <url>/2025/02/21/%E5%A4%AA%E8%B5%AB%E5%85%B9%E5%89%8D%E6%B2%BF%E8%BF%9B%E5%B1%95/</url>
+    <content><![CDATA[<span id="more"></span>
+<h1><span id="太赫兹新材料与前沿技术">太赫兹新材料与前沿技术</span></h1>
+<ul>
+<li>太赫兹源的产生，与物质的相互作用</li>
+<li>材料体系的太赫兹电磁响应性质，太赫兹波束调控技术</li>
+<li>太赫兹技术在成像和通信方面的应用
+30%平时成绩，30%专题研讨，40%课程研究报告</li>
+</ul>
+<h2><span id="lecture1-绪论">Lecture1 绪论</span></h2>
+<p>5G通信的频率范围：sub6GHz FR2(10-20GHz)</p>
+<p>毫米波的频率范围：30G-300GHz 太赫兹频率的范围：100GHz - 10THz</p>
+<p>毫米波<span class="math inline">\(\rightarrow\)</span>太赫兹<span class="math inline">\(\rightarrow\)</span>红外线</p>
+<p>成像：<span class="math inline">\(\underline{分辨率}\)</span></p>
+<p>电子学和光子学的<strong>重叠区</strong></p>
+<h3><span id="太赫兹辐射的特点">太赫兹辐射的特点</span></h3>
+<ul>
+<li><p>穿透性：对于大部分介质材料，非极性液体具有良好的穿透性，波长<span class="math inline">\(&gt;&gt;\)</span>空气的悬浮物，散射远小于光频和红外频段的电磁辐射</p></li>
+<li><p>金属：强反射（微波找到金属板上：强反射） 水：强吸收（极性液体）
+墙体：可以穿透过</p></li>
+<li><p>安全性：光子能量只有毫电子伏特，不会引起<strong>电离反应</strong>，不会像<strong>X射线</strong>一样（keV)；安检仪器(探测金属)</p></li>
+<li><p>光谱分辨的本领：大量的分子，尤其有机分子，其振动和转动跃迁引起的特征吸收峰很多处于THz频段，即生物分子的”<strong>指纹吸收峰</strong>“</p></li>
+<li><p>相较于微波，其频率高，波长短，传输方向性好，作为通信载体时信息容量大，应用于成像时，空间分辨率更高！</p></li>
+</ul>
+<p>Photonic THz Transmitter &amp; Electronic THz Receiver</p>
+<h3><span id="太赫兹技术的发展历程">太赫兹技术的发展历程</span></h3>
+<p>10w篇文献，分布在近50年</p>
+<p><em>THz Gap</em>：微波和红外线之间的研究<strong>空白</strong>，$Very
+ Limited  Tech  Enablers $</p>
+<p>20年代70年代：研究了Si和GaAs当中的光电导开关过程，脉冲宽度为ps</p>
+<p>90年代：光电导天线和飞秒激光技术的发展，太赫兹脉冲辐射的产生技术相对成熟</p>
+<p>95年：uW量级 混频技术 量子级联技术和真空电子学的太赫兹辐射源</p>
+<p>2002年：量子级联技术：液氮温度，4.4THz量子级联激光输出</p>
+<p>基于真空电子学的太赫兹辐射源，比如自由电子激光器，电子回旋管，BWO</p>
+<p>太赫兹光谱仪，成像仪，矢网扩频设备等（信息大楼一楼的暗室）</p>
+<h3><span id="研究方向的分类与应用方向">研究方向的分类与应用方向</span></h3>
+<p>辐射源、探测器、功能器件</p>
+<p>安检成像 无线通信 生化检测</p>
+<h3><span id="新型太赫兹材料">新型太赫兹材料</span></h3>
+<p>太赫兹透明材料，石墨烯材料，液晶材料，铁氧体材料，电磁超材料等在THz频段具有新颖的电磁性质</p>
+<p>吸波器 移相器 滤波器 极化调控等</p>
+]]></content>
+      <categories>
+        <category>太赫兹理论</category>
+      </categories>
+      <tags>
+        <tag>本科研讨课</tag>
+        <tag>太赫兹理论</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>模拟集成电路设计与仿真_何乐年</title>
     <url>/2025/02/23/%E6%A8%A1%E6%8B%9F%E9%9B%86%E6%88%90%E7%94%B5%E8%B7%AF%E8%AE%BE%E8%AE%A1%E4%B8%8E%E4%BB%BF%E7%9C%9F-%E4%BD%95%E4%B9%90%E5%B9%B4/</url>
     <content><![CDATA[<h1><span id="模拟集成电路设计与仿真">模拟集成电路设计与仿真</span></h1>
 <span id="more"></span>
 <!-- toc -->
 <ul>
-<li><a href="#chapter-v">Chapter Ⅴ</a>
+<li><a href="#chapter-v-运算放大器与负反馈">Chapter Ⅴ
+运算放大器与负反馈##</a>
 <ul>
 <li><a href="#负反馈系统">负反馈系统</a></li>
 <li><a href="#运算放大器的非线性简略分析">运算放大器的非线性简略分析</a></li>
@@ -18,7 +71,7 @@
 </ul></li>
 </ul>
 <!-- tocstop -->
-<h2><span id="chapter-v">Chapter Ⅴ</span></h2>
+<h2><span id="chapter-v-运算放大器与负反馈">Chapter Ⅴ 运算放大器与负反馈</span></h2>
 <h3><span id="负反馈系统">负反馈系统</span></h3>
 <p><img src="/2025/02/23/%E6%A8%A1%E6%8B%9F%E9%9B%86%E6%88%90%E7%94%B5%E8%B7%AF%E8%AE%BE%E8%AE%A1%E4%B8%8E%E4%BB%BF%E7%9C%9F-%E4%BD%95%E4%B9%90%E5%B9%B4/image-20250222182612859.png" alt="image-20250222182612859" style="zoom:50%;"></p>
 <blockquote>
@@ -182,58 +235,6 @@ PSRR=\frac{A_v | v_{dd=0}}{A_{DD}| v_{in=0}}
       </categories>
       <tags>
         <tag>模拟集成电路理论</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>太赫兹前沿进展</title>
-    <url>/2025/02/21/%E5%A4%AA%E8%B5%AB%E5%85%B9%E5%89%8D%E6%B2%BF%E8%BF%9B%E5%B1%95/</url>
-    <content><![CDATA[<span id="more"></span>
-<h1><span id="太赫兹新材料与前沿技术">太赫兹新材料与前沿技术</span></h1>
-<ul>
-<li>太赫兹源的产生，与物质的相互作用</li>
-<li>材料体系的太赫兹电磁响应性质，太赫兹波束调控技术</li>
-<li>太赫兹技术在成像和通信方面的应用
-30%平时成绩，30%专题研讨，40%课程研究报告</li>
-</ul>
-<h2><span id="lecture1-绪论">Lecture1 绪论</span></h2>
-<p>5G通信的频率范围：sub6GHz FR2(10-20GHz)</p>
-<p>毫米波的频率范围：30G-300GHz 太赫兹频率的范围：100GHz - 10THz</p>
-<p>毫米波<span class="math inline">\(\rightarrow\)</span>太赫兹<span class="math inline">\(\rightarrow\)</span>红外线</p>
-<p>成像：<span class="math inline">\(\underline{分辨率}\)</span></p>
-<p>电子学和光子学的<strong>重叠区</strong></p>
-<h3><span id="太赫兹辐射的特点">太赫兹辐射的特点</span></h3>
-<ul>
-<li><p>穿透性：对于大部分介质材料，非极性液体具有良好的穿透性，波长<span class="math inline">\(&gt;&gt;\)</span>空气的悬浮物，散射远小于光频和红外频段的电磁辐射</p></li>
-<li><p>金属：强反射（微波找到金属板上：强反射） 水：强吸收（极性液体）
-墙体：可以穿透过</p></li>
-<li><p>安全性：光子能量只有毫电子伏特，不会引起<strong>电离反应</strong>，不会像<strong>X射线</strong>一样（keV)；安检仪器(探测金属)</p></li>
-<li><p>光谱分辨的本领：大量的分子，尤其有机分子，其振动和转动跃迁引起的特征吸收峰很多处于THz频段，即生物分子的”<strong>指纹吸收峰</strong>“</p></li>
-<li><p>相较于微波，其频率高，波长短，传输方向性好，作为通信载体时信息容量大，应用于成像时，空间分辨率更高！</p></li>
-</ul>
-<p>Photonic THz Transmitter &amp; Electronic THz Receiver</p>
-<h3><span id="太赫兹技术的发展历程">太赫兹技术的发展历程</span></h3>
-<p>10w篇文献，分布在近50年</p>
-<p><em>THz Gap</em>：微波和红外线之间的研究<strong>空白</strong>，$Very
- Limited  Tech  Enablers $</p>
-<p>20年代70年代：研究了Si和GaAs当中的光电导开关过程，脉冲宽度为ps</p>
-<p>90年代：光电导天线和飞秒激光技术的发展，太赫兹脉冲辐射的产生技术相对成熟</p>
-<p>95年：uW量级 混频技术 量子级联技术和真空电子学的太赫兹辐射源</p>
-<p>2002年：量子级联技术：液氮温度，4.4THz量子级联激光输出</p>
-<p>基于真空电子学的太赫兹辐射源，比如自由电子激光器，电子回旋管，BWO</p>
-<p>太赫兹光谱仪，成像仪，矢网扩频设备等（信息大楼一楼的暗室）</p>
-<h3><span id="研究方向的分类与应用方向">研究方向的分类与应用方向</span></h3>
-<p>辐射源、探测器、功能器件</p>
-<p>安检成像 无线通信 生化检测</p>
-<h3><span id="新型太赫兹材料">新型太赫兹材料</span></h3>
-<p>太赫兹透明材料，石墨烯材料，液晶材料，铁氧体材料，电磁超材料等在THz频段具有新颖的电磁性质</p>
-<p>吸波器 移相器 滤波器 极化调控等</p>
-]]></content>
-      <categories>
-        <category>太赫兹理论</category>
-      </categories>
-      <tags>
-        <tag>本科研讨课</tag>
-        <tag>太赫兹理论</tag>
       </tags>
   </entry>
 </search>
