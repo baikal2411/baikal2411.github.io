@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>MotorCar_design</title>
-    <url>/2024/06/09/MotorCar-design/</url>
+    <title>MotorCar_design_Prelearning</title>
+    <url>/2023/12/09/MotorCar-design_Prelearning/</url>
     <content><![CDATA[<span id="more"></span>
 <p>在不侧重于硬件配置情况下，给出逐飞给出的部分外设重要函数：</p>
 <figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">//zf_common_clock.c：设置、获取系统频率，关闭看门狗，时钟初始化，等待所有核心初始化完毕</span></span><br><span class="line">*****************************************************************************************</span><br><span class="line"><span class="comment">//zf_device_absolute.encoder.c:编码器部分：</span></span><br><span class="line">uint8 <span class="title function_">absolute_encoder_init</span><span class="params">()</span>;         <span class="comment">//绝对值编码器初始化</span></span><br><span class="line">int16 <span class="title function_">absolute_encoder_get_offset</span><span class="params">()</span>;   <span class="comment">//绝对值编码器获取相较上次位置的偏移值</span></span><br><span class="line">int16 <span class="title function_">absolute_encoder_get_location</span><span class="params">()</span>; <span class="comment">//绝对值编码器获取当前角度值</span></span><br><span class="line">****************************************************************************************</span><br><span class="line"><span class="comment">//zf_device_bluetooth_ch9141.c: 蓝牙转串口模块</span></span><br><span class="line">uint32 <span class="title function_">bluetooth_ch9141_send_byte</span><span class="params">(<span class="type">const</span> uint8 data)</span>;   <span class="comment">//蓝牙转串口模块 发送数据</span></span><br><span class="line">uint32 <span class="title function_">bluetooth_ch9141_send_buffer</span><span class="params">(<span class="type">const</span> uint8 *buff, uint32 len)</span>; <span class="comment">//蓝牙转串口模块 发送数组</span></span><br><span class="line">uint32 <span class="title function_">bluetooth_ch9141_send_string</span> <span class="params">(<span class="type">const</span> <span class="type">char</span> *str)</span>; <span class="comment">//蓝牙转串口模块 发送字符串</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">bluetooth_ch9141_send_image</span> <span class="params">(<span class="type">const</span> uint8 *image_addr, uint32 image_size)</span>;</span><br><span class="line"><span class="comment">//蓝牙转串口模块 发送摄像头图像至上位机查看图像</span></span><br><span class="line">uint32 <span class="title function_">bluetooth_ch9141_read_buffer</span> <span class="params">(uint8 *buff, uint32 len)</span>;<span class="comment">//蓝牙转串口模块 读取函数</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">bluetooth_ch9141_uart_callback</span> <span class="params">(<span class="type">void</span>)</span>; <span class="comment">//蓝牙转串口模块 串口中断回调函数</span></span><br><span class="line">uint8 <span class="title function_">bluetooth_ch9141_init</span> <span class="params">(<span class="type">void</span>)</span><span class="comment">// 蓝牙转串口模块 初始化；使用的波特率为115200 为蓝牙转串口模块的默认波特率 如需其他波特率请使用上位机修改模块参数 *****************************************************************************************</span></span><br><span class="line"><span class="comment">//zf_device_imu660ra.c: IMU660ra模块</span></span><br><span class="line">uint8 <span class="title function_">imu660ra_init</span> <span class="params">(<span class="type">void</span>)</span>; <span class="comment">//初始化 IMU660RA</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">imu660ra_get_acc</span> <span class="params">(<span class="type">void</span>)</span>; <span class="comment">//获取 IMU660RA 加速度计数据imu660ra_acc_x/y/z</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">imu660ra_get_gyro</span> <span class="params">(<span class="type">void</span>)</span>; <span class="comment">//获取 IMU660RA 陀螺仪数据imu660ra_gyro_x/y/z</span></span><br><span class="line"><span class="comment">//还有imu963ra,mpu6050的配置代码，结构与IMU660ra相似</span></span><br><span class="line">**********************************************************************************</span><br><span class="line"><span class="comment">//zf_device_ips200.c: 屏幕显示</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">ips200_clear</span> <span class="params">(<span class="type">void</span>)</span>； <span class="comment">//IPS200 清屏函数，将屏幕清空成背景颜色</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">ips200_full</span> <span class="params">(<span class="type">const</span> uint16 color)</span>；<span class="comment">//IPS200 屏幕填充函数，颜色格式 RGB565 或者可以使用 zf_common_font.h 内 rgb565_color_enum 枚举值或者自行写入</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">ips200_set_dir</span> <span class="params">(ips200_dir_enum dir)</span>；<span class="comment">//设置显示方向，只有在初始化屏幕之前调用才生效</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">ips200_set_font</span> <span class="params">(ips200_font_size_enum font)</span>；<span class="comment">//设置显示字体</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">ips200_set_color</span> <span class="params">(<span class="type">const</span> uint16 pen, <span class="type">const</span> uint16 bgcolor)</span>；<span class="comment">//设置显示颜色</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">ips200_draw_point</span> <span class="params">(uint16 x, uint16 y, <span class="type">const</span> uint16 color)</span>；<span class="comment">//IPS200 画点</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">ips200_draw_line</span> <span class="params">(uint16 x_start, uint16 y_start, uint16 x_end, uint16 y_end, <span class="type">const</span> uint16 color)</span>；<span class="comment">//画线</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">ips200_show_char</span> <span class="params">(uint16 x, uint16 y, <span class="type">const</span> <span class="type">char</span> dat)</span>；<span class="comment">//显示字符</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">ips200_show_string</span> <span class="params">(uint16 x, uint16 y, <span class="type">const</span> <span class="type">char</span> dat[])</span>；<span class="comment">//IPS200 显示字符串</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">ips200_show_int</span> <span class="params">(uint16 x, uint16 y, <span class="type">const</span> int32 dat, uint8 num)</span>;<span class="comment">//IPS200 显示32位有符号 (去除整数部分无效的0)</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">ips200_show_uint</span> <span class="params">(uint16 x, uint16 y, <span class="type">const</span> uint32 dat, uint8 num)</span>;<span class="comment">//IPS200 显示32位无符号 (去除整数部分无效的0)</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">ips200_show_float</span> <span class="params">(uint16 x, uint16 y, <span class="type">const</span> <span class="type">double</span> dat, uint8 num, uint8 pointnum)</span></span><br><span class="line"><span class="comment">//IPS200 显示浮点数(去除整数部分无效的0)</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">ips200_show_binary_image</span> <span class="params">(uint16 x, uint16 y, <span class="type">const</span> uint8 *image, uint16 width, uint16 height, uint16 dis_width, uint16 dis_height)</span>;<span class="comment">//IPS200 显示二值图像 数据每八个点组成一个字节数据,不可以用来直接显示总钻风的未压缩的二值化图像    </span></span><br><span class="line"><span class="type">void</span> <span class="title function_">ips200_show_gray_image</span> <span class="params">(uint16 x, uint16 y, <span class="type">const</span> uint8 *image, uint16 width, uint16 height, uint16 dis_width, uint16 dis_height, uint8 threshold)</span>;<span class="comment">//IPS200 显示 8bit 灰度图像 带二值化阈值,如果要显示二值化图像 直接修改最后一个参数为需要的二值化阈值即可</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">ips200_show_rgb565_image</span> <span class="params">(uint16 x, uint16 y, <span class="type">const</span> uint16 *image, uint16 width, uint16 height, uint16 dis_width, uint16 dis_height, uint8 color_mode)</span>;<span class="comment">//IPS200 显示 RGB565 彩色图像,用于显示凌瞳的 RGB565 的图像,如果要显示低位在前的其他 RGB565 图像 修改最后一个参数即可</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">ips200_show_wave</span> <span class="params">(uint16 x, uint16 y, <span class="type">const</span> uint16 *wave, uint16 width, uint16 value_max, uint16 dis_width, uint16 dis_value_max)</span>;<span class="comment">//IPS200 显示波形</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">ips200_show_chinese</span> <span class="params">(uint16 x, uint16 y, uint8 size, <span class="type">const</span> uint8 *chinese_buffer, uint8 number, <span class="type">const</span> uint16 color)</span>;<span class="comment">//汉字显示</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">ips200_init</span> <span class="params">(ips200_type_enum type_select)</span>;<span class="comment">//  2寸 IPS液晶初始化   </span></span><br><span class="line"><span class="comment">//IPS114，oled,tft180同理。</span></span><br><span class="line">**********************************************************************************</span><br><span class="line"><span class="comment">//zf_device_key.c:按键状态扫描; 获取按键状态; 清除指定按键状态;按键初始化</span></span><br><span class="line">**********************************************************************************</span><br><span class="line"><span class="comment">//zf_device_mt9v03x.c:</span></span><br><span class="line"><span class="comment">//定义 MT9V03X 基本配置,初始化    </span></span><br><span class="line"><span class="comment">//注：小钻风摄像头OV7725以及scc8660同理</span></span><br><span class="line">**********************************************************************************    </span><br></pre></td></tr></table></figure>
@@ -126,6 +126,43 @@ Cache大小为16KB</p></li>
 ]]></content>
   </entry>
   <entry>
+    <title>SRTP_Project_UWB_Technology</title>
+    <url>/2024/06/09/SRTP_UWB_Positioning/</url>
+    <content><![CDATA[<span id="more"></span>
+<p><strong><em>以下是中期答辩PPT：</em></strong></p>
+<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409232948098.png" alt="image-20250409232948098" style="zoom:80%;"></p>
+<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233008866.png" alt="image-20250409233008866" style="zoom:80%;"></p>
+<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233035505.png" alt="image-20250409233035505" style="zoom:80%;"></p>
+<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233052333.png" alt="image-20250409233052333" style="zoom:80%;"></p>
+<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233109266.png" alt="image-20250409233109266" style="zoom:80%;"></p>
+<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233131391.png" alt="image-20250409233131391" style="zoom:80%;"></p>
+<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233145742.png" alt="image-20250409233145742" style="zoom:80%;"><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233207091.png" alt="image-20250409233207091" style="zoom:80%;"></p>
+<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233230044.png" alt="image-20250409233230044" style="zoom:80%;"></p>
+<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233244529.png" alt="image-20250409233244529" style="zoom:80%;"></p>
+<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233258830.png" alt="image-20250409233258830" style="zoom:80%;"></p>
+<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233309883.png" alt="image-20250409233309883" style="zoom:80%;"></p>
+<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233330976.png" alt="image-20250409233330976" style="zoom:80%;"></p>
+<p><strong><em>以下是结题答辩PPT：</em></strong></p>
+<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233427820.png" alt="image-20250409233427820" style="zoom:80%;"></p>
+<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233444395.png" alt="image-20250409233444395" style="zoom:80%;"></p>
+<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233455584.png" alt="image-20250409233455584" style="zoom:80%;"></p>
+<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233510039.png" alt="image-20250409233510039" style="zoom:80%;"></p>
+<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233524910.png" alt="image-20250409233524910" style="zoom:80%;"></p>
+<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233537022.png" alt="image-20250409233537022" style="zoom:80%;"></p>
+<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233554442.png" alt="image-20250409233554442" style="zoom:80%;"></p>
+<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233606757.png" alt="image-20250409233606757" style="zoom:80%;"></p>
+<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233618307.png" alt="image-20250409233618307" style="zoom:80%;"></p>
+<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233629245.png" alt="image-20250409233629245" style="zoom:80%;"></p>
+<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233641884.png" alt="image-20250409233641884" style="zoom:80%;"></p>
+<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233654015.png" alt="image-20250409233654015" style="zoom:80%;"></p>
+<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233729288.png" alt="image-20250409233729288" style="zoom:80%;"></p>
+<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233740074.png" alt="image-20250409233740074" style="zoom:80%;"></p>
+<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233751149.png" alt="image-20250409233751149" style="zoom:80%;"></p>
+<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233807481.png" alt="image-20250409233807481" style="zoom:80%;"></p>
+<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233820914.png" alt="image-20250409233820914" style="zoom:80%;"></p>
+]]></content>
+  </entry>
+  <entry>
     <title>太赫兹前沿进展</title>
     <url>/2025/02/21/%E5%A4%AA%E8%B5%AB%E5%85%B9%E5%89%8D%E6%B2%BF%E8%BF%9B%E5%B1%95/</url>
     <content><![CDATA[<span id="more"></span>
@@ -176,43 +213,6 @@ Cache大小为16KB</p></li>
         <tag>本科研讨课</tag>
         <tag>太赫兹理论</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>SRTP_Project_UWB_Technology</title>
-    <url>/2024/06/09/SRTP_UWB_Positioning/</url>
-    <content><![CDATA[<span id="more"></span>
-<p><strong><em>以下是中期答辩PPT：</em></strong></p>
-<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409232948098.png" alt="image-20250409232948098" style="zoom:80%;"></p>
-<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233008866.png" alt="image-20250409233008866" style="zoom:80%;"></p>
-<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233035505.png" alt="image-20250409233035505" style="zoom:80%;"></p>
-<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233052333.png" alt="image-20250409233052333" style="zoom:80%;"></p>
-<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233109266.png" alt="image-20250409233109266" style="zoom:80%;"></p>
-<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233131391.png" alt="image-20250409233131391" style="zoom:80%;"></p>
-<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233145742.png" alt="image-20250409233145742" style="zoom:80%;"><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233207091.png" alt="image-20250409233207091" style="zoom:80%;"></p>
-<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233230044.png" alt="image-20250409233230044" style="zoom:80%;"></p>
-<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233244529.png" alt="image-20250409233244529" style="zoom:80%;"></p>
-<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233258830.png" alt="image-20250409233258830" style="zoom:80%;"></p>
-<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233309883.png" alt="image-20250409233309883" style="zoom:80%;"></p>
-<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233330976.png" alt="image-20250409233330976" style="zoom:80%;"></p>
-<p><strong><em>以下是结题答辩PPT：</em></strong></p>
-<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233427820.png" alt="image-20250409233427820" style="zoom:80%;"></p>
-<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233444395.png" alt="image-20250409233444395" style="zoom:80%;"></p>
-<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233455584.png" alt="image-20250409233455584" style="zoom:80%;"></p>
-<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233510039.png" alt="image-20250409233510039" style="zoom:80%;"></p>
-<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233524910.png" alt="image-20250409233524910" style="zoom:80%;"></p>
-<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233537022.png" alt="image-20250409233537022" style="zoom:80%;"></p>
-<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233554442.png" alt="image-20250409233554442" style="zoom:80%;"></p>
-<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233606757.png" alt="image-20250409233606757" style="zoom:80%;"></p>
-<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233618307.png" alt="image-20250409233618307" style="zoom:80%;"></p>
-<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233629245.png" alt="image-20250409233629245" style="zoom:80%;"></p>
-<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233641884.png" alt="image-20250409233641884" style="zoom:80%;"></p>
-<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233654015.png" alt="image-20250409233654015" style="zoom:80%;"></p>
-<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233729288.png" alt="image-20250409233729288" style="zoom:80%;"></p>
-<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233740074.png" alt="image-20250409233740074" style="zoom:80%;"></p>
-<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233751149.png" alt="image-20250409233751149" style="zoom:80%;"></p>
-<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233807481.png" alt="image-20250409233807481" style="zoom:80%;"></p>
-<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233820914.png" alt="image-20250409233820914" style="zoom:80%;"></p>
-]]></content>
   </entry>
   <entry>
     <title>模拟集成电路设计与仿真_何乐年</title>
