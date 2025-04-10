@@ -1,6 +1,749 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>MotorCar_Summary</title>
+    <url>/2024/07/10/MotorCar-Summary/</url>
+    <content><![CDATA[<span id="more"></span>
+<h1><span id="平衡摩托总结">平衡摩托总结</span></h1>
+<p>这是对代码逻辑的简要总结，详细的代码位于https://github.com/baikal2411/SMC/</p>
+<p>详细的外设要求信息见第十九届智能车摩托组外设清单。</p>
+<p><img src="/2024/07/10/MotorCar-Summary/image-20250410004239054.png" alt="image-20250410004239054" style="zoom:80%;"></p>
+<p><img src="/2024/07/10/MotorCar-Summary/image-20250410004252980.png" alt="image-20250410004252980" style="zoom:80%;"></p>
+<p><img src="/2024/07/10/MotorCar-Summary/image-20250410004312430.png" alt="image-20250410004312430" style="zoom:80%;"></p>
+<p><img src="/2024/07/10/MotorCar-Summary/image-20250410004323950.png" alt="image-20250410004323950" style="zoom:80%;"></p>
+<h2><span id="cpu资源安排">CPU资源安排</span></h2>
+<p>对于cpu0而言：需要等待 CPU1
+核心完成初始化或某些事件准备就绪，确保多核协作的同步。</p>
+<p><code>seekfree_assistant_interface_init(SEEKFREE_ASSISTANT_WIRELESS_UART)</code>：初始化无线串口助手接口。</p>
+<p><code>seekfree_assistant_camera_information_config(...)</code>：配置摄像头助手的信息，包括摄像头类型、图像数据缓冲区及分辨率。</p>
+<p>通过 VOFA 工具发送波形数据，用于调试或监控。</p>
+<p><img src="/2024/07/10/MotorCar-Summary/image-20250410005343890.png" alt="image-20250410005343890" style="zoom:80%;"></p>
+<p>对于cpu1而言：直接运行图像识别。</p>
+<p><img src="/2024/07/10/MotorCar-Summary/image-20250410004948891.png" alt="image-20250410004948891" style="zoom: 80%;"></p>
+<h2><span id="中断设置">中断设置</span></h2>
+<h3><span id="pit-定时器中断"><strong>PIT 定时器中断</strong></span></h3>
+<p><code>cc60_pit_ch0_isr</code> 和 <code>cc60_pit_ch1_isr</code></p>
+<p>处理定时器中断，清除中断标志。在<code>cc60_pit_ch0_isr</code>中：</p>
+<ul>
+<li><p>扫描按键（<code>User_keyScan()</code>）。</p></li>
+<li><p>获取陀螺仪和加速度计数据（<code>imu660ra_get_gyro()</code> 和
+<code>imu660ra_get_acc()</code>）。</p></li>
+<li><p>调用控制逻辑（<code>CH0_LOOP()</code>）。</p></li>
+<li><p>如果检测到停止标志或陀螺仪角度异常，则停止运动并复位控制。</p></li>
+<li><p>在<code>cc60_pit_ch1_isr</code>中：清除中断标志.</p></li>
+</ul>
+<p><img src="/2024/07/10/MotorCar-Summary/image-20250410005725994.png" alt="image-20250410005725994" style="zoom:80%;"></p>
+<h3><span id="外部中断">外部中断</span></h3>
+<p><strong><code>exti_ch0_ch4_isr</code> 到
+<code>exti_ch3_ch7_isr</code></strong>：处理外部引脚中断，清除中断标志。</p>
+<p>例如：在 <code>exti_ch3_ch7_isr</code>
+中，处理摄像头的垂直同步信号（<code>camera_vsync_handler()</code>）和点阵屏扫描（<code>dot_matrix_screen_scan()</code>）。在
+<code>exti_ch1_ch5_isr</code> 中，处理 ToF
+模块的中断（<code>tof_module_exti_handler()</code>）</p>
+<p><img src="/2024/07/10/MotorCar-Summary/image-20250410005909048.png" alt="image-20250410005909048" style="zoom:80%;"></p>
+<h3><span id="dma中断">DMA中断</span></h3>
+<p><img src="/2024/07/10/MotorCar-Summary/image-20250410005940122.png" alt="image-20250410005940122" style="zoom:80%;"></p>
+<p><code>dma_ch5_isr</code>处理 DMA 传输完成中断。并且调用摄像头 DMA
+数据处理函数（<code>camera_dma_handler()</code>）。</p>
+<h3><span id="uart中断">UART中断</span></h3>
+<ul>
+<li><p>发送和接收中断</p>
+<p>例如：</p>
+<ul>
+<li><code>uart0_rx_isr</code>：处理 UART0
+的接收中断，调用调试或数据处理函数（如
+<code>debug_interrupr_handler()</code>）。</li>
+<li><code>uart1_rx_isr</code>：处理摄像头 UART
+数据接收（<code>camera_uart_handler()</code>）和 TLD7002 回调。</li>
+<li><code>uart2_rx_isr</code>：处理无线模块 UART
+数据接收（<code>wireless_module_uart_handler()</code>）。</li>
+<li><code>uart3_rx_isr</code>：处理 GNSS 模块的 UART
+数据接收（<code>gnss_uart_callback()</code>）。</li>
+</ul></li>
+<li><p>错误中断</p>
+<ul>
+<li>例如：
+<ul>
+<li><code>uart0_er_isr</code> 到 <code>uart3_er_isr</code>：处理 UART
+错误中断，调用错误处理函数（如
+<code>IfxAsclin_Asc_isrError()</code>）。</li>
+</ul></li>
+</ul></li>
+</ul>
+<p><img src="/2024/07/10/MotorCar-Summary/image-20250410010144301.png" alt="image-20250410010144301" style="zoom:80%;"></p>
+<p>在每个中断服务程序中，使用 <code>interrupt_global_enable(0)</code>
+来启用全局中断，避免中断嵌套问题。</p>
+<h2><span id="控制逻辑">控制逻辑</span></h2>
+<p><em>位于文件control_strategy当中</em></p>
+<h4><span id="1-偏差计算"><strong>1. 偏差计算</strong></span></h4>
+<ul>
+<li><code>computeDevation</code> 函数
+<ul>
+<li>通过图像处理结果（如中线、左线和右线的位置），计算车辆相对于路径的偏差。</li>
+<li>根据路径的曲率（<code>curvity</code>）判断轨迹是左偏、右偏还是直线。</li>
+<li>计算偏差值（<code>devation</code> 和
+<code>part_devation</code>），并根据车辆位置（如是否丢线）进行修正。</li>
+<li>输出偏差值，用于后续的方向控制。</li>
+</ul></li>
+</ul>
+<hr>
+<h4><span id="2-路径规划"><strong>2. 路径规划</strong></span></h4>
+<ul>
+<li>根据图像中线和左右边界线的位置，规划车辆的前视路径（<code>foresight_str</code>
+和 <code>foresight_end</code>）。</li>
+<li>判断路径的偏移方向（左偏或右偏），并调整偏差值以适应不同的道路情况。</li>
+</ul>
+<hr>
+<h4><span id="3-速度控制"><strong>3. 速度控制</strong></span></h4>
+<ul>
+<li><code>getTargetSpeed</code> 函数
+<ul>
+<li>根据当前偏差值（<code>current_devation</code>），动态调整目标速度（<code>target_speed</code>）。</li>
+<li>偏差较小时，允许更高的速度；偏差较大时，降低速度以提高安全性。</li>
+</ul></li>
+</ul>
+<hr>
+<h4><span id="4-姿态控制"><strong>4. 姿态控制</strong></span></h4>
+<ul>
+<li><code>CH0_LOOP</code> 函数
+<ul>
+<li>周期性更新车辆的姿态和运动参数：
+<ul>
+<li>每 1ms 更新一次 Roll 角速度控制。</li>
+<li>每 5ms 更新一次 Roll 角度控制。</li>
+<li>每 50ms 更新一次 Yaw 角速度和方向控制。</li>
+<li>每 100ms 更新一次速度控制。</li>
+</ul></li>
+<li>使用 PID 控制器（如
+<code>ROLL_AV_PID</code>、<code>ROLL_AG_PID</code> 和
+<code>YAW_AV_PID</code>）对车辆的姿态和速度进行精确控制。</li>
+<li>调用 <code>controlSteer</code> 和 <code>controlSwing</code>
+函数调整舵机和电机的输出。</li>
+</ul></li>
+</ul>
+<hr>
+<h4><span id="5-偏差调整"><strong>5. 偏差调整</strong></span></h4>
+<ul>
+<li><code>Devation_Adjust</code> 函数
+<ul>
+<li>根据不同的场景（如左环岛、右环岛等），对偏差值进行限制和修正。</li>
+<li>确保车辆在特殊场景下能够保持稳定的轨迹。</li>
+</ul></li>
+</ul>
+<p>下面给出中断的控制函数：</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">CH0_LOOP</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">{</span><br><span class="line"></span><br><span class="line">   <span class="comment">// float temp_devation = computeDevation(REFERENCE_STR, REFERENCE_END, STRAIGHT_LIMIT);</span></span><br><span class="line">    devation = Kalman_Filter(&amp;DEVATION_KALMAN,current_devation);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (control_time % <span class="number">2</span> == <span class="number">0</span>)</span><br><span class="line">    {</span><br><span class="line">        Attitude_Solution(Mahony);</span><br><span class="line">        gyro_pitch_ag += <span class="number">3</span>;<span class="comment">//correct pitch to zero</span></span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 100ms更新一次速度环</span></span><br><span class="line">    <span class="keyword">if</span> (control_time % <span class="number">200</span> == <span class="number">0</span>)</span><br><span class="line">    {</span><br><span class="line">        control_time = <span class="number">0</span>;</span><br><span class="line">        Encoder_getData();</span><br><span class="line">        current_speed = -SPEED_INDEX * (encoder_left + encoder_right);</span><br><span class="line">        getTargetSpeed();</span><br><span class="line">        speed_out = positionalPID(&amp;SPEED_PID, speed_pid, current_speed, target_speed);</span><br><span class="line">    }</span><br><span class="line">    <span class="comment">// 50ms更新一次Yaw角速度 </span></span><br><span class="line">    <span class="keyword">if</span> (control_time % <span class="number">100</span> == <span class="number">0</span>)</span><br><span class="line">    {</span><br><span class="line">        Devation_Adjust();<span class="comment">//ADJUST DEVATION</span></span><br><span class="line">        yaw_av_out = positionalPID(&amp;YAW_AV_PID, yaw_av_pid, gyro_yaw_av, <span class="number">0</span>);</span><br><span class="line">        target_accel = <span class="number">2.5f</span>;</span><br><span class="line">        <span class="keyword">if</span> (gyro_pitch_ag &gt; <span class="number">10</span>)</span><br><span class="line">            accel_out = incrementalPID(&amp;ACCEL_PID, accel_pid, gyro_roll_ac, (target_accel + PITCH_INDEX * sinf(gyro_pitch_ag * <span class="number">0.01745f</span>)));</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            {</span><br><span class="line">                accel_out = <span class="number">0</span>;</span><br><span class="line">                Mduty = <span class="number">2000</span>;</span><br><span class="line">            }</span><br><span class="line">        turn_out = positionalPID(&amp;TURN_PID, turn_pid, devation, <span class="number">0</span>);</span><br><span class="line">        turn_out = protectRange(turn_out,<span class="number">-80</span>,+<span class="number">80</span>);</span><br><span class="line">        controlSteer(SEVER_CENTER + turn_out);</span><br><span class="line">        bend_out = positionalPID(&amp;BEND_PID, bend_pid, devation, <span class="number">0</span>);</span><br><span class="line">        Mduty += accel_out;</span><br><span class="line">    }</span><br><span class="line">    <span class="comment">// 5ms更新一次 Roll角度</span></span><br><span class="line">    <span class="keyword">if</span> (control_time % <span class="number">10</span> == <span class="number">0</span>)</span><br><span class="line">    {</span><br><span class="line">        roll_ag_out = positionalPID(&amp;ROLL_AG_PID, roll_ag_pid, gyro_roll_ag, -yaw_av_out-bend_out);</span><br><span class="line">    }</span><br><span class="line">    <span class="comment">// 1ms更新一次 Roll角速度,</span></span><br><span class="line">    <span class="keyword">if</span> (control_time % <span class="number">2</span> == <span class="number">0</span>)</span><br><span class="line">    {</span><br><span class="line">        Tduty = incrementalPID(&amp;ROLL_AV_PID,roll_av_pid,gyro_roll_av,roll_ag_out + dynamic_zero);</span><br><span class="line"><span class="comment">//        Tduty = incrementalPID(&amp;ROLL_AV_PID,roll_av_pid,gyro_roll_av,roll_ag_out + dynamic_zero);</span></span><br><span class="line">        <span class="comment">// 限幅</span></span><br><span class="line">        Mduty = protectRange(Mduty,<span class="number">-4000</span>,+<span class="number">4000</span>);</span><br><span class="line"></span><br><span class="line">        Tduty = protectRange(Tduty,<span class="number">-4000</span>,+<span class="number">4000</span>);</span><br><span class="line">        <span class="keyword">if</span> (gyro_pitch_ag &gt; <span class="number">10</span>)</span><br><span class="line">            controlSwing(-Mduty,Tduty);</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            controlSwing(<span class="number">-2000</span>,Tduty);</span><br><span class="line">    }</span><br><span class="line">    control_time += <span class="number">2</span>;</span><br><span class="line">    system_time++;</span><br><span class="line">}</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>其中最重要的就是串级PID的使用了，</p>
+<p><strong>(1) 外环：速度控制</strong></p>
+<ul>
+<li><strong>输入</strong>：目标速度（<code>target_speed</code>）与当前速度（<code>current_speed</code>）的误差。</li>
+<li><strong>输出</strong>：加速度控制目标（<code>speed_out</code>），作为内环的输入。</li>
+</ul>
+<p><strong>(2) 内环：加速度控制</strong></p>
+<ul>
+<li><strong>输入</strong>：目标加速度（<code>target_accel</code>）与当前加速度（<code>gyro_roll_ac</code>）的误差。</li>
+<li><strong>输出</strong>：电机的PWM补偿（<code>accel_out</code>）。</li>
+</ul>
+<p><strong>(3) 方向控制</strong></p>
+<ul>
+<li><strong>输入</strong>：偏差（<code>devation</code>）与目标偏差（通常为0）的误差。</li>
+<li><strong>输出</strong>：舵机的控制信号（<code>turn_out</code>）。</li>
+</ul>
+<p><strong>(4) 姿态控制</strong></p>
+<ul>
+<li><strong>输入</strong>：目标Roll角速度（<code>roll_ag_out</code>）与当前Roll角速度（<code>gyro_roll_av</code>）的误差。</li>
+<li><strong>输出</strong>：电机的PWM信号（<code>Tduty</code>）。</li>
+</ul>
+<p><strong>(1) 速度控制</strong></p>
+<ul>
+<li><p><strong>目标</strong>：根据当前速度和目标速度，调整车辆的加速度和电机输出。</p></li>
+<li><p>实现</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">Encoder_getData();</span><br><span class="line"></span><br><span class="line">current_speed = -SPEED_INDEX * (encoder_left + encoder_right);</span><br><span class="line"></span><br><span class="line">getTargetSpeed();</span><br><span class="line"></span><br><span class="line">speed_out = positionalPID(&amp;SPEED_PID, speed_pid, current_speed, target_speed);</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>Encoder_getData()</code> 获取当前速度。</li>
+<li><code>getTargetSpeed()</code> 根据偏差计算目标速度。</li>
+<li><code>positionalPID</code> 使用速度 PID 控制器计算速度误差，输出
+<code>speed_out</code>。</li>
+</ul></li>
+</ul>
+<h4><span id="2-加速度控制"><strong>(2) 加速度控制</strong></span></h4>
+<ul>
+<li><p><strong>目标</strong>：根据目标加速度和当前加速度，调整车辆的动力输出。</p></li>
+<li><p>实现</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> (gyro_pitch_ag &gt; <span class="number">10</span>)</span><br><span class="line"></span><br><span class="line">  accel_out = **incrementalPID**(&amp;ACCEL_PID, accel_pid, gyro_roll_ac, (target_accel + PITCH_INDEX * **sinf**(gyro_pitch_ag * <span class="number">0.01745f</span>)));</span><br><span class="line"></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line"></span><br><span class="line">  accel_out = <span class="number">0</span>;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>使用增量式 PID
+控制器（<code>incrementalPID</code>）计算加速度误差，输出
+<code>accel_out</code>。</li>
+<li>当车辆的 Pitch 角度较大时，考虑重力影响进行补偿。</li>
+</ul></li>
+</ul>
+<h4><span id="3-方向控制"><strong>(3) 方向控制</strong></span></h4>
+<ul>
+<li><p><strong>目标</strong>：根据偏差调整车辆的方向。</p></li>
+<li><p>实现</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">turn_out = positionalPID(&amp;TURN_PID, turn_pid, devation, 0);</span><br><span class="line"></span><br><span class="line">turn_out = protectRange(turn_out, -80, +80);</span><br><span class="line"></span><br><span class="line">controlSteer(SEVER_CENTER + turn_out);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>使用方向 PID 控制器（<code>TURN_PID</code>）计算偏差误差，输出
+<code>turn_out</code>。</li>
+<li>调用 <code>controlSteer</code> 调整舵机角度。</li>
+</ul></li>
+</ul>
+<h4><span id="4-roll-角度控制"><strong>(4) Roll 角度控制</strong></span></h4>
+<ul>
+<li><p><strong>目标</strong>：通过 Roll 角度 PID
+控制器调整车辆的平衡。</p></li>
+<li><p>实现</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">roll_ag_out = **positionalPID**(&amp;ROLL_AG_PID, roll_ag_pid, gyro_roll_ag, -yaw_av_out - bend_out);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>使用 Roll 角度 PID 控制器（<code>ROLL_AG_PID</code>）计算 Roll
+角度误差，输出 <code>roll_ag_out</code>。</li>
+<li>结合 Yaw 角速度和弯道补偿（<code>bend_out</code>）进行调整。</li>
+</ul></li>
+</ul>
+<h4><span id="5-roll-角速度控制"><strong>(5) Roll 角速度控制</strong></span></h4>
+<ul>
+<li><p><strong>目标</strong>：通过 Roll 角速度 PID
+控制器调整电机输出。</p></li>
+<li><p>实现</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">Tduty = incrementalPID(&amp;ROLL_AV_PID, roll_av_pid, gyro_roll_av, roll_ag_out + dynamic_zero);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>使用 Roll 角速度 PID 控制器（<code>ROLL_AV_PID</code>）计算 Roll
+角速度误差，输出电机占空比 <code>Tduty</code>。</li>
+</ul></li>
+</ul>
+<h2><span id="图像的预处理">图像的预处理</span></h2>
+<p>image_process.c
+文件的主要作用是对摄像头采集的图像数据进行预处理和特征提取，为后续的路径规划和车辆控制提供基础数据。它包含了图像的二值化、边界检测、噪声过滤以及中线计算等功能。</p>
+<hr>
+<p><strong>1. 图像预处理</strong></p>
+<ul>
+<li><strong>Sobel 算子 (<code>image_sobel</code>)</strong>：
+<ul>
+<li>使用 Sobel 算子计算图像的梯度，提取边缘信息。</li>
+<li>根据梯度值和局部平均值进行二值化处理，生成二值图像。</li>
+<li>输出结果存储在 <code>binary_image</code> 中，用于后续处理。</li>
+</ul></li>
+<li><strong>自适应阈值 (<code>adaptiveThreshold</code>)</strong>：
+<ul>
+<li>根据局部区域的平均值动态计算阈值，对图像进行二值化。</li>
+<li>适用于光照变化较大的场景。</li>
+</ul></li>
+</ul>
+<p><strong>2. 边界检测</strong></p>
+<ul>
+<li><strong>左手法和右手法 (<code>findline_lefthand_adaptive</code> 和
+<code>findline_righthand_adaptive</code>)</strong>：
+<ul>
+<li>使用迷宫搜索算法，从种子点开始沿左侧或右侧边界搜索。</li>
+<li>搜索结果存储在 <code>b_left</code> 和 <code>b_right</code>
+中，分别表示左边界和右边界的点集。</li>
+</ul></li>
+<li><strong>边界转换</strong>：
+<ul>
+<li>将 <code>b_left</code> 和 <code>b_right</code>
+中的点集转换为每一行的边界值，存储在 <code>left_line</code> 和
+<code>right_line</code> 中。</li>
+</ul></li>
+</ul>
+<p><strong>3. 中线计算</strong></p>
+<ul>
+<li><strong>中线计算 (<code>maze_image_predeal</code>)</strong>：
+<ul>
+<li>根据左右边界线计算每一行的中线位置，存储在 <code>mid_line</code>
+中。</li>
+<li>中线用于后续的路径规划和偏差计算。</li>
+</ul></li>
+</ul>
+<p><strong>4. 噪声过滤</strong></p>
+<ul>
+<li><strong>二值图像过滤 (<code>Bin_Image_Filter</code>)</strong>：
+<ul>
+<li>对二值图像进行噪声过滤，移除孤立点或小面积噪声。</li>
+<li>根据周围像素的值判断当前像素是否需要保留。</li>
+</ul></li>
+<li><strong>中值滤波 (<code>medianFilter</code>)</strong>：
+<ul>
+<li>使用中值滤波器平滑图像，减少噪声对边界检测的影响。</li>
+</ul></li>
+</ul>
+<p><strong>5. 边界处理</strong></p>
+<ul>
+<li><strong>边界绘制 (<code>image_draw_rectan</code>)</strong>：
+<ul>
+<li>在图像的边界区域绘制黑色矩形，避免边界噪声影响处理结果。</li>
+</ul></li>
+</ul>
+<p><strong>6. 图像预处理流程</strong></p>
+<ul>
+<li><strong>迷宫图像预处理 (<code>maze_image_predeal</code>)</strong>：
+<ul>
+<li>调用 <code>image_draw_rectan</code> 绘制边界。</li>
+<li>使用 <code>GetSeed</code> 提取种子点。</li>
+<li>调用 <code>findline_lefthand_adaptive</code> 和
+<code>findline_righthand_adaptive</code> 搜索左右边界。</li>
+<li>将边界点集转换为每一行的边界值，并计算中线。</li>
+</ul></li>
+</ul>
+<p>预处理的流程：</p>
+<ol type="1">
+<li><strong>图像预处理</strong>：
+<ul>
+<li>对摄像头采集的原始图像进行梯度计算、二值化和噪声过滤，生成清晰的二值图像。</li>
+</ul></li>
+<li><strong>边界检测</strong>：
+<ul>
+<li>使用迷宫搜索算法提取道路的左右边界线。</li>
+</ul></li>
+<li><strong>中线计算</strong>：
+<ul>
+<li>根据左右边界线计算道路的中线，为路径规划和车辆控制提供参考。</li>
+</ul></li>
+<li><strong>噪声处理</strong>：
+<ul>
+<li>通过滤波算法移除图像中的噪声，增强边界检测的鲁棒性。</li>
+</ul></li>
+<li><strong>数据输出</strong>：
+<ul>
+<li>输出左右边界线和中线的坐标数据，供后续模块使用。</li>
+</ul></li>
+</ol>
+<h2><span id="图像边界的提取">图像边界的提取</span></h2>
+<p>image_tool.c
+文件主要实现了图像处理相关的功能，核心目的是从图像数据中提取道路信息（如中线、左右边界线、拐点等），并为路径规划和车辆控制提供支持。以下是文件的主要功能和实现的详细解释：</p>
+<hr>
+<ol type="1">
+<li><strong>文件的主要功能</strong></li>
+</ol>
+<ul>
+<li><strong>迷宫算法</strong>：通过迷宫搜索算法提取道路的左右边界线或拐点。</li>
+<li><strong>拐点检测</strong>：根据梯度变化或坐标变化检测道路的拐点。</li>
+<li><strong>线段拟合</strong>：通过拟合算法判断道路是否为直线。</li>
+<li><strong>丢线处理</strong>：在丢失边界线时，通过补线算法恢复道路信息。</li>
+<li><strong>辅助判断</strong>：提供道路类型（如环岛、障碍物）的辅助判断功能。</li>
+</ul>
+<hr>
+<p><strong>2. 核心函数解析</strong></p>
+<p><strong>(1) <code>maze_find_inflection</code></strong></p>
+<ul>
+<li><strong>功能</strong>：使用迷宫算法从起始点开始，沿左侧或右侧边界搜索拐点。</li>
+<li><strong>输入参数</strong>：
+<ul>
+<li><code>choose</code>：选择搜索方向（'L' 表示左侧，'R'
+表示右侧）。</li>
+<li><code>StartPoint</code>：起始点坐标。</li>
+<li><code>endline</code>：搜索的最小行索引。</li>
+<li><code>num</code>：最大搜索点数。</li>
+<li><code>Qiedian</code>：输出的拐点坐标。</li>
+<li><code>thre</code>：梯度变化的阈值。</li>
+</ul></li>
+<li><strong>实现逻辑</strong>：
+<ul>
+<li>使用迷宫搜索算法，沿着图像的二值化边界线进行遍历。</li>
+<li>通过梯度变化（<code>cal_gradient_Point</code>）检测拐点。</li>
+<li>如果找到满足条件的拐点，则将其坐标存储到 <code>Qiedian</code>
+中。</li>
+</ul></li>
+</ul>
+<hr>
+<p><strong>(2) <code>FillingLine</code></strong></p>
+<ul>
+<li><strong>功能</strong>：在丢失边界线时，通过起点和终点之间的直线补全边界线。</li>
+<li><strong>输入参数</strong>：
+<ul>
+<li><code>Choose</code>：选择补全的边界线（'L' 表示左边界，'R'
+表示右边界）。</li>
+<li><code>StarPoint</code> 和
+<code>EndPoint</code>：起点和终点坐标。</li>
+</ul></li>
+<li><strong>实现逻辑</strong>：
+<ul>
+<li>根据起点和终点计算直线的斜率和截距。</li>
+<li>遍历起点到终点之间的行，计算每一行的边界线坐标并填充。</li>
+</ul></li>
+</ul>
+<hr>
+<p><strong>(3) <code>GetSeed</code></strong></p>
+<ul>
+<li><strong>功能</strong>：从图像中提取种子点，用于后续的边界线搜索。</li>
+<li><strong>实现逻辑</strong>：
+<ul>
+<li>在图像的某一行（如第 118 行）中，检测黑白跳变点。</li>
+<li>根据跳变点的位置，提取左右边界的种子点。</li>
+</ul></li>
+</ul>
+<hr>
+<p><strong>(4) <code>getValidMidRow</code></strong></p>
+<ul>
+<li><strong>功能</strong>：计算有效的中线行索引，用于判断道路的有效区域。</li>
+<li><strong>实现逻辑</strong>：
+<ul>
+<li>从图像底部向上遍历，检测中线是否有效。</li>
+<li>使用滑动窗口对中线行索引进行平滑处理。</li>
+</ul></li>
+</ul>
+<hr>
+<p><strong>(5) <code>cal_gradient_Point</code></strong></p>
+<ul>
+<li><strong>功能</strong>：计算两点之间的梯度（斜率）。</li>
+<li><strong>实现逻辑</strong>：
+<ul>
+<li>根据两点的坐标计算斜率。</li>
+<li>如果两点的 X 坐标相同，则返回一个极大值（表示垂直线）。</li>
+</ul></li>
+</ul>
+<hr>
+<p><strong>(6) <code>find_straight</code></strong></p>
+<ul>
+<li><strong>功能</strong>：判断一段边界线是否为直线。</li>
+<li><strong>实现逻辑</strong>：
+<ul>
+<li>使用最小二乘法拟合直线，计算直线的斜率和截距。</li>
+<li>根据直线与实际点的偏差，判断是否为直线。</li>
+</ul></li>
+</ul>
+<hr>
+<p><strong>(7) <code>EvaluateCircleBoundary</code></strong></p>
+<ul>
+<li><strong>功能</strong>：判断当前道路是否为环岛。</li>
+<li><strong>实现逻辑</strong>：
+<ul>
+<li>根据左右边界线的变化（如跳变、间距）判断是否为环岛。</li>
+<li>如果满足环岛条件，则返回 <code>true</code>。</li>
+</ul></li>
+</ul>
+<hr>
+<p><strong>(8) <code>EvaluateBarrierBoundary</code></strong></p>
+<ul>
+<li><strong>功能</strong>：判断当前道路是否存在障碍物。</li>
+<li><strong>实现逻辑</strong>：
+<ul>
+<li>检测左右边界线的跳变幅度。</li>
+<li>如果跳变幅度超过阈值，则认为存在障碍物。</li>
+</ul></li>
+</ul>
+<hr>
+<p><strong>(9) <code>UpInflection_Handle_Test</code></strong></p>
+<ul>
+<li><strong>功能</strong>：在丢失边界线时，向上搜索拐点并补全边界线。</li>
+<li><strong>实现逻辑</strong>：
+<ul>
+<li>从起始点向上搜索黑白跳变点。</li>
+<li>使用迷宫算法找到拐点，并通过 <code>FillingLine</code>
+补全边界线。</li>
+</ul></li>
+</ul>
+<hr>
+<p><strong>3. 文件的整体作用</strong></p>
+<ul>
+<li><strong>图像处理</strong>：从二值化图像中提取道路的左右边界线和中线。</li>
+<li><strong>路径规划</strong>：通过拐点检测和直线拟合，为路径规划提供支持。</li>
+<li><strong>丢线处理</strong>：在边界线丢失时，通过补线算法恢复道路信息。</li>
+<li><strong>辅助判断</strong>：提供环岛、障碍物等特殊道路场景的判断功能。</li>
+</ul>
+<p>image_tool.c
+文件是图像处理模块的核心部分，主要通过迷宫搜索、梯度计算和拟合算法提取道路信息，并为车辆的路径规划和控制提供基础数据。它在整个系统中起到了桥梁作用，将图像数据转化为可用于控制的道路信息。</p>
+<h3><span id="元素识别处理">元素识别处理</span></h3>
+<p>camera.c
+文件的主要功能是处理摄像头采集的图像数据，进行图像预处理、道路特征提取、道路类型识别以及特定道路元素的处理。以下是文件的内容梳理：</p>
+<hr>
+<p><strong>1. 文件的主要功能</strong></p>
+<ul>
+<li><strong>图像采集与预处理</strong>：从摄像头获取原始图像数据，并进行二值化、边界增强等处理。</li>
+<li><strong>道路特征提取</strong>：提取左右边界线、中线以及其他道路特征。</li>
+<li><strong>道路类型识别</strong>：识别直道、弯道、环岛、十字路口、障碍物等道路类型。</li>
+<li><strong>道路元素处理</strong>：根据识别的道路类型，执行相应的处理逻辑。</li>
+<li><strong>调试与显示</strong>：通过点阵屏或显示屏输出调试信息和图像。</li>
+</ul>
+<hr>
+<p><strong>2. 文件的主要模块</strong></p>
+<p><strong>(1) 全局变量</strong></p>
+<ul>
+<li><strong>图像数据</strong>：
+<ul>
+<li><code>temp_Image</code>：存储摄像头采集的原始图像。</li>
+<li><code>binary_image</code> 和
+<code>black_white_Image</code>：存储二值化后的图像。</li>
+</ul></li>
+<li><strong>道路特征</strong>：
+<ul>
+<li><code>left_line</code>、<code>right_line</code>、<code>mid_line</code>：分别表示左右边界线和中线的坐标。</li>
+</ul></li>
+<li><strong>状态标志</strong>：
+<ul>
+<li><code>straight_flag</code>、<code>bend_flag</code>、<code>S_bend_flag</code>
+等：标志当前道路类型。</li>
+<li><code>Stop_Flag</code>：标志是否需要停车。</li>
+</ul></li>
+<li><strong>道路类型结构体</strong>：
+<ul>
+<li><code>Road_Type_Test</code>：包含各种道路类型的标志（如十字路口、环岛、障碍物等）。</li>
+</ul></li>
+</ul>
+<hr>
+<p><strong>(2) 图像预处理</strong></p>
+<ul>
+<li><strong><code>Camera_Display_Test</code></strong>：
+<ul>
+<li>核心函数，用于处理摄像头采集的图像。</li>
+<li><strong>主要步骤</strong>：
+<ol type="1">
+<li>调用 <code>Copy_Origin_Image_Test</code> 复制原始图像。</li>
+<li>调用 <code>Local_Dajin</code> 进行二值化处理。</li>
+<li>调用 <code>image_sobel</code> 提取边缘信息。</li>
+<li>调用 <code>Bin_Image_Filter</code> 和
+<code>black_white_Image_Filter</code> 进行噪声过滤。</li>
+<li>调用 <code>image_draw_rectan</code> 增强边界条件。</li>
+<li>调用 <code>maze_image_predeal</code> 提取左右边界线和中线。</li>
+<li>调用 <code>getValidMidRow</code> 计算有效中线行。</li>
+<li>判断道路类型（直道或弯道），并计算偏差值。</li>
+</ol></li>
+</ul></li>
+</ul>
+<hr>
+<p><strong>(3) 道路类型识别</strong></p>
+<ul>
+<li><strong><code>Element_Ack_usingCNT</code></strong>：
+<ul>
+<li>根据当前道路状态，识别特定的道路类型（如十字路口、环岛、障碍物等）。</li>
+<li><strong>主要逻辑</strong>：
+<ul>
+<li>调用
+<code>Clarify_Cross</code>、<code>Clarify_Left_Circle</code>、<code>Clarify_Right_Circle</code>
+等函数，判断是否为特定道路类型。</li>
+<li>更新 <code>Road_Type_Test</code> 中的标志位。</li>
+</ul></li>
+</ul></li>
+<li><strong><code>Element_Ack_Test</code></strong>：
+<ul>
+<li>类似于 <code>Element_Ack_usingCNT</code>，但不依赖
+<code>process_count</code>，直接检测道路类型。</li>
+</ul></li>
+</ul>
+<hr>
+<p><strong>(4) 道路元素处理</strong></p>
+<ul>
+<li><strong><code>Element_Handle_Test</code></strong>：
+<ul>
+<li>根据识别的道路类型，调用相应的处理函数。</li>
+<li><strong>主要处理函数</strong>：
+<ul>
+<li><code>Handle_Left_CircleIsland_Test</code> 和
+<code>Handle_Right_CircleIsland_Test</code>：处理左环岛和右环岛。</li>
+<li><code>Handle_Normal_Cross_Test</code>：处理十字路口。</li>
+<li><code>Handle_Left_Barrier_Test</code> 和
+<code>Handle_Right_Barrier_Test</code>：处理左侧和右侧障碍物。</li>
+<li><code>Handle_Stop_Test</code>：处理停车标志。</li>
+<li><code>Handle_S_Bend</code>：处理 S 型弯道。</li>
+</ul></li>
+</ul></li>
+</ul>
+<hr>
+<p><strong>(5) 道路类型识别与处理的辅助函数</strong></p>
+<ul>
+<li><strong>十字路口</strong>：
+<ul>
+<li><code>Clarify_Cross</code>：判断是否为十字路口。</li>
+<li><code>Handle_Normal_Cross_Test</code>：处理十字路口的逻辑。</li>
+<li><code>FixCross_Midline</code>：修正十字路口的中线。</li>
+<li><code>CrossExitAssistant</code>：辅助判断是否离开十字路口。</li>
+</ul></li>
+<li><strong>环岛</strong>：
+<ul>
+<li><code>Clarify_Left_Circle</code> 和
+<code>Clarify_Right_Circle</code>：判断是否为左环岛或右环岛。</li>
+<li><code>Handle_Left_CircleIsland_Test</code> 和
+<code>Handle_Right_CircleIsland_Test</code>：处理环岛的逻辑。</li>
+</ul></li>
+<li><strong>障碍物</strong>：
+<ul>
+<li><code>Clarify_Left_Barrier</code> 和
+<code>Clarify_Right_Barrier</code>：判断是否存在左侧或右侧障碍物。</li>
+<li><code>Handle_Left_Barrier_Test</code> 和
+<code>Handle_Right_Barrier_Test</code>：处理障碍物的逻辑。</li>
+</ul></li>
+<li><strong>停车</strong>：
+<ul>
+<li><code>Clarify_Stop_Test</code>：判断是否需要停车。</li>
+<li><code>Handle_Stop_Test</code>：处理停车逻辑。</li>
+</ul></li>
+<li><strong>S 型弯道</strong>：
+<ul>
+<li><code>Clarify_S_Bend</code>：判断是否为 S 型弯道。</li>
+<li><code>Handle_S_Bend</code>：处理 S 型弯道的逻辑。</li>
+</ul></li>
+</ul>
+<hr>
+<p><strong>(6) 图像二值化</strong></p>
+<ul>
+<li><strong><code>Local_Dajin</code></strong>：
+<ul>
+<li>使用 Otsu 算法对图像进行二值化。</li>
+<li>分别对图像的上半部分和下半部分计算阈值，并进行二值化处理。</li>
+</ul></li>
+<li><strong><code>GetHistGram</code> 和 <code>otsu2dTh</code></strong>：
+<ul>
+<li>计算图像的直方图，并使用 Otsu 算法计算二值化阈值。</li>
+</ul></li>
+<li><strong><code>binaryzation</code></strong>：
+<ul>
+<li>根据阈值对图像进行二值化。</li>
+</ul></li>
+</ul>
+<hr>
+<p><strong>(7) 调试与显示</strong></p>
+<ul>
+<li><strong><code>light_show</code></strong>：
+<ul>
+<li>根据当前道路状态，通过点阵屏显示调试信息。</li>
+<li>显示内容包括十字路口、环岛、障碍物等状态。</li>
+</ul></li>
+<li><strong><code>ips200_displayimage03x</code></strong>：
+<ul>
+<li>在显示屏上显示二值化图像。</li>
+</ul></li>
+<li><strong><code>ips200_show_string</code> 和
+<code>ips200_show_int</code></strong>：
+<ul>
+<li>显示调试字符串和数值。</li>
+</ul></li>
+</ul>
+<hr>
+<h4><span id="3-文件的整体作用"><strong>3. 文件的整体作用</strong></span></h4>
+<ol type="1">
+<li><strong>图像处理</strong>：
+<ul>
+<li>从摄像头获取原始图像，并进行二值化、边界增强和特征提取。</li>
+</ul></li>
+<li><strong>道路识别</strong>：
+<ul>
+<li>识别直道、弯道、十字路口、环岛、障碍物等道路类型。</li>
+</ul></li>
+<li><strong>道路处理</strong>：
+<ul>
+<li>根据识别的道路类型，执行相应的处理逻辑。</li>
+</ul></li>
+<li><strong>调试与显示</strong>：
+<ul>
+<li>输出调试信息和图像，便于开发和调试。</li>
+</ul></li>
+</ol>
+<p>我们以右环岛为例说明识别逻辑：</p>
+<p>右环岛的识别通过函数 <code>Clarify_Right_Circle()</code>
+实现，其核心逻辑是基于图像特征（如边界线、梯度变化、黑白区域分布等）判断当前道路是否为右环岛。</p>
+<h4><span id="识别步骤"><strong>识别步骤</strong></span></h4>
+<ol type="1">
+<li><strong>边界条件检查</strong>：
+<ul>
+<li>调用 <code>EvaluateCircleBoundary('R', ...)</code>
+检查右边界是否满足环岛的基本条件（如边界线的连续性和形状）。</li>
+<li>如果不满足条件，直接返回 <code>false</code>。</li>
+</ul></li>
+<li><strong>寻找右边界拐点</strong>：
+<ul>
+<li>使用迷宫搜索算法 <code>maze_find_inflection_bythre('R', ...)</code>
+从图像中寻找右边界的拐点（<code>right_down</code>）。</li>
+<li>如果拐点位置不合理（如超出图像范围或过于靠近底部），返回
+<code>false</code>。</li>
+</ul></li>
+<li><strong>统计黑白区域分布</strong>：
+<ul>
+<li>在右边界拐点附近统计黑白区域的分布情况，判断是否符合右环岛的特征。</li>
+<li>如果黑白区域的分布不符合预期，返回 <code>false</code>。</li>
+</ul></li>
+<li><strong>计算边界长度</strong>：
+<ul>
+<li>通过遍历右边界线，计算第一段和第二段的长度（<code>firstlen</code> 和
+<code>seclen</code>）。</li>
+<li>如果两段长度符合右环岛的特征（如第一段较长，第二段较短），返回
+<code>true</code>，否则返回 <code>false</code>。</li>
+</ul></li>
+</ol>
+<p>右环岛的处理通过函数 <code>Handle_Right_CircleIsland_Test()</code>
+实现，其核心逻辑是基于状态机逐步完成右环岛的处理。</p>
+<p><strong>处理步骤</strong></p>
+<ol type="1">
+<li><p><strong>状态机初始化</strong>：</p>
+<ul>
+<li>使用变量 <code>RightCircleIsland_Stage_Test</code>
+表示右环岛的当前处理阶段。</li>
+<li>每个阶段对应不同的处理逻辑。</li>
+</ul></li>
+<li><p><strong>各阶段处理逻辑</strong>：</p>
+<ul>
+<li><p>阶段 0</p>
+<p>：检测右边界的丢失行数和丢失点数，寻找右边界的拐点，并补全右边界线。</p>
+<ul>
+<li>如果丢失点数超过阈值且时间满足条件，进入下一阶段。</li>
+</ul></li>
+<li><p>阶段 1</p>
+<p>：继续寻找右边界的拐点，并补全右边界线。</p>
+<ul>
+<li>如果丢失点数小于阈值且时间满足条件，进入下一阶段。</li>
+</ul></li>
+<li><p>阶段 2</p>
+<p>：检测右边界的上方拐点，并补全右边界线。</p>
+<ul>
+<li>如果满足条件（如拐点位置合理），进入下一阶段。</li>
+</ul></li>
+<li><p>阶段 3</p>
+<p>：处理右边界的特殊情况（如大面积丢失），并补全右边界线。</p>
+<ul>
+<li>如果满足条件（如时间或边界特征），进入下一阶段。</li>
+</ul></li>
+<li><p>阶段 4</p>
+<p>：检测右边界的最终拐点，并补全右边界线。</p>
+<ul>
+<li>如果满足条件，进入下一阶段。</li>
+</ul></li>
+<li><p><strong>阶段
+5</strong>：完成右环岛的处理，清除右环岛标志位。</p></li>
+</ul></li>
+<li><p><strong>状态机结束</strong>：</p>
+<ul>
+<li>当状态机进入最终阶段（阶段
+5），清除右环岛标志位，并记录右环岛处理完成的次数。</li>
+</ul></li>
+</ol>
+]]></content>
+  </entry>
+  <entry>
+    <title>SRTP_Project_UWB_Technology</title>
+    <url>/2024/06/09/SRTP_UWB_Positioning/</url>
+    <content><![CDATA[<span id="more"></span>
+<p><strong><em>以下是中期答辩PPT：</em></strong></p>
+<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409232948098.png" alt="image-20250409232948098" style="zoom:80%;"></p>
+<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233008866.png" alt="image-20250409233008866" style="zoom:80%;"></p>
+<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233035505.png" alt="image-20250409233035505" style="zoom:80%;"></p>
+<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233052333.png" alt="image-20250409233052333" style="zoom:80%;"></p>
+<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233109266.png" alt="image-20250409233109266" style="zoom:80%;"></p>
+<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233131391.png" alt="image-20250409233131391" style="zoom:80%;"></p>
+<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233145742.png" alt="image-20250409233145742" style="zoom:80%;"><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233207091.png" alt="image-20250409233207091" style="zoom:80%;"></p>
+<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233230044.png" alt="image-20250409233230044" style="zoom:80%;"></p>
+<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233244529.png" alt="image-20250409233244529" style="zoom:80%;"></p>
+<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233258830.png" alt="image-20250409233258830" style="zoom:80%;"></p>
+<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233309883.png" alt="image-20250409233309883" style="zoom:80%;"></p>
+<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233330976.png" alt="image-20250409233330976" style="zoom:80%;"></p>
+<p><strong><em>以下是结题答辩PPT：</em></strong></p>
+<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233427820.png" alt="image-20250409233427820" style="zoom:80%;"></p>
+<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233444395.png" alt="image-20250409233444395" style="zoom:80%;"></p>
+<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233455584.png" alt="image-20250409233455584" style="zoom:80%;"></p>
+<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233510039.png" alt="image-20250409233510039" style="zoom:80%;"></p>
+<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233524910.png" alt="image-20250409233524910" style="zoom:80%;"></p>
+<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233537022.png" alt="image-20250409233537022" style="zoom:80%;"></p>
+<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233554442.png" alt="image-20250409233554442" style="zoom:80%;"></p>
+<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233606757.png" alt="image-20250409233606757" style="zoom:80%;"></p>
+<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233618307.png" alt="image-20250409233618307" style="zoom:80%;"></p>
+<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233629245.png" alt="image-20250409233629245" style="zoom:80%;"></p>
+<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233641884.png" alt="image-20250409233641884" style="zoom:80%;"></p>
+<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233654015.png" alt="image-20250409233654015" style="zoom:80%;"></p>
+<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233729288.png" alt="image-20250409233729288" style="zoom:80%;"></p>
+<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233740074.png" alt="image-20250409233740074" style="zoom:80%;"></p>
+<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233751149.png" alt="image-20250409233751149" style="zoom:80%;"></p>
+<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233807481.png" alt="image-20250409233807481" style="zoom:80%;"></p>
+<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233820914.png" alt="image-20250409233820914" style="zoom:80%;"></p>
+]]></content>
+  </entry>
+  <entry>
     <title>MotorCar_design_Prelearning</title>
     <url>/2023/12/09/MotorCar-design_Prelearning/</url>
     <content><![CDATA[<span id="more"></span>
@@ -126,43 +869,6 @@ Cache大小为16KB</p></li>
 ]]></content>
   </entry>
   <entry>
-    <title>SRTP_Project_UWB_Technology</title>
-    <url>/2024/06/09/SRTP_UWB_Positioning/</url>
-    <content><![CDATA[<span id="more"></span>
-<p><strong><em>以下是中期答辩PPT：</em></strong></p>
-<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409232948098.png" alt="image-20250409232948098" style="zoom:80%;"></p>
-<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233008866.png" alt="image-20250409233008866" style="zoom:80%;"></p>
-<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233035505.png" alt="image-20250409233035505" style="zoom:80%;"></p>
-<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233052333.png" alt="image-20250409233052333" style="zoom:80%;"></p>
-<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233109266.png" alt="image-20250409233109266" style="zoom:80%;"></p>
-<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233131391.png" alt="image-20250409233131391" style="zoom:80%;"></p>
-<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233145742.png" alt="image-20250409233145742" style="zoom:80%;"><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233207091.png" alt="image-20250409233207091" style="zoom:80%;"></p>
-<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233230044.png" alt="image-20250409233230044" style="zoom:80%;"></p>
-<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233244529.png" alt="image-20250409233244529" style="zoom:80%;"></p>
-<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233258830.png" alt="image-20250409233258830" style="zoom:80%;"></p>
-<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233309883.png" alt="image-20250409233309883" style="zoom:80%;"></p>
-<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233330976.png" alt="image-20250409233330976" style="zoom:80%;"></p>
-<p><strong><em>以下是结题答辩PPT：</em></strong></p>
-<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233427820.png" alt="image-20250409233427820" style="zoom:80%;"></p>
-<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233444395.png" alt="image-20250409233444395" style="zoom:80%;"></p>
-<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233455584.png" alt="image-20250409233455584" style="zoom:80%;"></p>
-<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233510039.png" alt="image-20250409233510039" style="zoom:80%;"></p>
-<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233524910.png" alt="image-20250409233524910" style="zoom:80%;"></p>
-<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233537022.png" alt="image-20250409233537022" style="zoom:80%;"></p>
-<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233554442.png" alt="image-20250409233554442" style="zoom:80%;"></p>
-<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233606757.png" alt="image-20250409233606757" style="zoom:80%;"></p>
-<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233618307.png" alt="image-20250409233618307" style="zoom:80%;"></p>
-<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233629245.png" alt="image-20250409233629245" style="zoom:80%;"></p>
-<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233641884.png" alt="image-20250409233641884" style="zoom:80%;"></p>
-<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233654015.png" alt="image-20250409233654015" style="zoom:80%;"></p>
-<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233729288.png" alt="image-20250409233729288" style="zoom:80%;"></p>
-<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233740074.png" alt="image-20250409233740074" style="zoom:80%;"></p>
-<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233751149.png" alt="image-20250409233751149" style="zoom:80%;"></p>
-<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233807481.png" alt="image-20250409233807481" style="zoom:80%;"></p>
-<p><img src="/2024/06/09/SRTP_UWB_Positioning/image-20250409233820914.png" alt="image-20250409233820914" style="zoom:80%;"></p>
-]]></content>
-  </entry>
-  <entry>
     <title>太赫兹前沿进展</title>
     <url>/2025/02/21/%E5%A4%AA%E8%B5%AB%E5%85%B9%E5%89%8D%E6%B2%BF%E8%BF%9B%E5%B1%95/</url>
     <content><![CDATA[<span id="more"></span>
@@ -212,6 +918,43 @@ Cache大小为16KB</p></li>
       <tags>
         <tag>本科研讨课</tag>
         <tag>太赫兹理论</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>硅基太赫兹源报告</title>
+    <url>/2025/03/12/%E7%A1%85%E5%9F%BA%E5%A4%AA%E8%B5%AB%E5%85%B9%E6%BA%90%E6%8A%A5%E5%91%8A/</url>
+    <content><![CDATA[<span id="more"></span>
+<p><img src="/2025/03/12/%E7%A1%85%E5%9F%BA%E5%A4%AA%E8%B5%AB%E5%85%B9%E6%BA%90%E6%8A%A5%E5%91%8A/image-20250312195743650.png" alt="image-20250312195743650" style="zoom:80%;"></p>
+<p><img src="/2025/03/12/%E7%A1%85%E5%9F%BA%E5%A4%AA%E8%B5%AB%E5%85%B9%E6%BA%90%E6%8A%A5%E5%91%8A/image-20250312195757308.png" alt="image-20250312195757308" style="zoom:80%;"></p>
+<p><img src="/2025/03/12/%E7%A1%85%E5%9F%BA%E5%A4%AA%E8%B5%AB%E5%85%B9%E6%BA%90%E6%8A%A5%E5%91%8A/image-20250312195841147.png" alt="image-20250312195841147" style="zoom:80%;"></p>
+<p><img src="/2025/03/12/%E7%A1%85%E5%9F%BA%E5%A4%AA%E8%B5%AB%E5%85%B9%E6%BA%90%E6%8A%A5%E5%91%8A/image-20250312195855016.png" alt="image-20250312195855016" style="zoom:80%;"></p>
+<p><img src="/2025/03/12/%E7%A1%85%E5%9F%BA%E5%A4%AA%E8%B5%AB%E5%85%B9%E6%BA%90%E6%8A%A5%E5%91%8A/image-20250312195909049.png" alt="image-20250312195909049" style="zoom:80%;"></p>
+<p><img src="/2025/03/12/%E7%A1%85%E5%9F%BA%E5%A4%AA%E8%B5%AB%E5%85%B9%E6%BA%90%E6%8A%A5%E5%91%8A/image-20250312195922829.png" alt="image-20250312195922829" style="zoom:80%;"></p>
+<p><img src="/2025/03/12/%E7%A1%85%E5%9F%BA%E5%A4%AA%E8%B5%AB%E5%85%B9%E6%BA%90%E6%8A%A5%E5%91%8A/image-20250312195933599.png" alt="image-20250312195933599" style="zoom:80%;"></p>
+<p><img src="/2025/03/12/%E7%A1%85%E5%9F%BA%E5%A4%AA%E8%B5%AB%E5%85%B9%E6%BA%90%E6%8A%A5%E5%91%8A/image-20250312195947896.png" alt="image-20250312195947896" style="zoom:80%;"></p>
+<p><img src="/2025/03/12/%E7%A1%85%E5%9F%BA%E5%A4%AA%E8%B5%AB%E5%85%B9%E6%BA%90%E6%8A%A5%E5%91%8A/image-20250312200010374.png" alt="image-20250312200010374" style="zoom:80%;"></p>
+<p><img src="/2025/03/12/%E7%A1%85%E5%9F%BA%E5%A4%AA%E8%B5%AB%E5%85%B9%E6%BA%90%E6%8A%A5%E5%91%8A/image-20250312200022278.png" alt="image-20250312200022278" style="zoom:80%;"></p>
+<p><img src="/2025/03/12/%E7%A1%85%E5%9F%BA%E5%A4%AA%E8%B5%AB%E5%85%B9%E6%BA%90%E6%8A%A5%E5%91%8A/image-20250312200034381.png" alt="image-20250312200034381" style="zoom:80%;"></p>
+<p><img src="/2025/03/12/%E7%A1%85%E5%9F%BA%E5%A4%AA%E8%B5%AB%E5%85%B9%E6%BA%90%E6%8A%A5%E5%91%8A/image-20250312200047645.png" alt="image-20250312200047645" style="zoom:80%;"></p>
+<p><img src="/2025/03/12/%E7%A1%85%E5%9F%BA%E5%A4%AA%E8%B5%AB%E5%85%B9%E6%BA%90%E6%8A%A5%E5%91%8A/image-20250312200058679.png" alt="image-20250312200058679" style="zoom:80%;"></p>
+<p><img src="/2025/03/12/%E7%A1%85%E5%9F%BA%E5%A4%AA%E8%B5%AB%E5%85%B9%E6%BA%90%E6%8A%A5%E5%91%8A/image-20250312200108315.png" alt="image-20250312200108315" style="zoom:80%;"></p>
+<p><img src="/2025/03/12/%E7%A1%85%E5%9F%BA%E5%A4%AA%E8%B5%AB%E5%85%B9%E6%BA%90%E6%8A%A5%E5%91%8A/image-20250312200121116.png" alt="image-20250312200121116" style="zoom:80%;"></p>
+<p><img src="/2025/03/12/%E7%A1%85%E5%9F%BA%E5%A4%AA%E8%B5%AB%E5%85%B9%E6%BA%90%E6%8A%A5%E5%91%8A/image-20250312200132377.png" alt="image-20250312200132377" style="zoom:80%;"></p>
+<p><img src="/2025/03/12/%E7%A1%85%E5%9F%BA%E5%A4%AA%E8%B5%AB%E5%85%B9%E6%BA%90%E6%8A%A5%E5%91%8A/image-20250312200141017.png" alt="image-20250312200141017" style="zoom:80%;"></p>
+<p><img src="/2025/03/12/%E7%A1%85%E5%9F%BA%E5%A4%AA%E8%B5%AB%E5%85%B9%E6%BA%90%E6%8A%A5%E5%91%8A/image-20250312200151736.png" alt="image-20250312200151736" style="zoom:80%;"></p>
+<p><img src="/2025/03/12/%E7%A1%85%E5%9F%BA%E5%A4%AA%E8%B5%AB%E5%85%B9%E6%BA%90%E6%8A%A5%E5%91%8A/image-20250312200200829.png" alt="image-20250312200200829" style="zoom:80%;"></p>
+<p><img src="/2025/03/12/%E7%A1%85%E5%9F%BA%E5%A4%AA%E8%B5%AB%E5%85%B9%E6%BA%90%E6%8A%A5%E5%91%8A/image-20250312200210944.png" alt="image-20250312200210944" style="zoom:80%;"></p>
+<p><img src="/2025/03/12/%E7%A1%85%E5%9F%BA%E5%A4%AA%E8%B5%AB%E5%85%B9%E6%BA%90%E6%8A%A5%E5%91%8A/image-20250312200220142.png" alt="image-20250312200220142" style="zoom:80%;"></p>
+<p><img src="/2025/03/12/%E7%A1%85%E5%9F%BA%E5%A4%AA%E8%B5%AB%E5%85%B9%E6%BA%90%E6%8A%A5%E5%91%8A/image-20250312200241200.png" alt="image-20250312200241200" style="zoom:80%;"></p>
+<p><img src="/2025/03/12/%E7%A1%85%E5%9F%BA%E5%A4%AA%E8%B5%AB%E5%85%B9%E6%BA%90%E6%8A%A5%E5%91%8A/image-20250312200254775.png" alt="image-20250312200254775" style="zoom:80%;"></p>
+<p><img src="/2025/03/12/%E7%A1%85%E5%9F%BA%E5%A4%AA%E8%B5%AB%E5%85%B9%E6%BA%90%E6%8A%A5%E5%91%8A/image-20250312200307138.png" alt="image-20250312200307138" style="zoom:80%;"></p>
+<p><img src="/2025/03/12/%E7%A1%85%E5%9F%BA%E5%A4%AA%E8%B5%AB%E5%85%B9%E6%BA%90%E6%8A%A5%E5%91%8A/image-20250312200315672.png" alt="image-20250312200315672" style="zoom:80%;"></p>
+<p><img src="/2025/03/12/%E7%A1%85%E5%9F%BA%E5%A4%AA%E8%B5%AB%E5%85%B9%E6%BA%90%E6%8A%A5%E5%91%8A/image-20250312200324269.png" alt="image-20250312200324269" style="zoom:80%;"></p>
+<p><img src="/2025/03/12/%E7%A1%85%E5%9F%BA%E5%A4%AA%E8%B5%AB%E5%85%B9%E6%BA%90%E6%8A%A5%E5%91%8A/image-20250312200335544.png" alt="image-20250312200335544" style="zoom:80%;"></p>
+<p><img src="/2025/03/12/%E7%A1%85%E5%9F%BA%E5%A4%AA%E8%B5%AB%E5%85%B9%E6%BA%90%E6%8A%A5%E5%91%8A/image-20250312200354841.png" alt="image-20250312200354841" style="zoom:80%;"></p>
+]]></content>
+      <tags>
+        <tag>课程报告</tag>
       </tags>
   </entry>
   <entry>
@@ -364,43 +1107,6 @@ value设置为1，选第一次falling的时候）</p>
       </categories>
       <tags>
         <tag>模拟集成电路理论</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>硅基太赫兹源报告</title>
-    <url>/2025/03/12/%E7%A1%85%E5%9F%BA%E5%A4%AA%E8%B5%AB%E5%85%B9%E6%BA%90%E6%8A%A5%E5%91%8A/</url>
-    <content><![CDATA[<span id="more"></span>
-<p><img src="/2025/03/12/%E7%A1%85%E5%9F%BA%E5%A4%AA%E8%B5%AB%E5%85%B9%E6%BA%90%E6%8A%A5%E5%91%8A/image-20250312195743650.png" alt="image-20250312195743650" style="zoom:80%;"></p>
-<p><img src="/2025/03/12/%E7%A1%85%E5%9F%BA%E5%A4%AA%E8%B5%AB%E5%85%B9%E6%BA%90%E6%8A%A5%E5%91%8A/image-20250312195757308.png" alt="image-20250312195757308" style="zoom:80%;"></p>
-<p><img src="/2025/03/12/%E7%A1%85%E5%9F%BA%E5%A4%AA%E8%B5%AB%E5%85%B9%E6%BA%90%E6%8A%A5%E5%91%8A/image-20250312195841147.png" alt="image-20250312195841147" style="zoom:80%;"></p>
-<p><img src="/2025/03/12/%E7%A1%85%E5%9F%BA%E5%A4%AA%E8%B5%AB%E5%85%B9%E6%BA%90%E6%8A%A5%E5%91%8A/image-20250312195855016.png" alt="image-20250312195855016" style="zoom:80%;"></p>
-<p><img src="/2025/03/12/%E7%A1%85%E5%9F%BA%E5%A4%AA%E8%B5%AB%E5%85%B9%E6%BA%90%E6%8A%A5%E5%91%8A/image-20250312195909049.png" alt="image-20250312195909049" style="zoom:80%;"></p>
-<p><img src="/2025/03/12/%E7%A1%85%E5%9F%BA%E5%A4%AA%E8%B5%AB%E5%85%B9%E6%BA%90%E6%8A%A5%E5%91%8A/image-20250312195922829.png" alt="image-20250312195922829" style="zoom:80%;"></p>
-<p><img src="/2025/03/12/%E7%A1%85%E5%9F%BA%E5%A4%AA%E8%B5%AB%E5%85%B9%E6%BA%90%E6%8A%A5%E5%91%8A/image-20250312195933599.png" alt="image-20250312195933599" style="zoom:80%;"></p>
-<p><img src="/2025/03/12/%E7%A1%85%E5%9F%BA%E5%A4%AA%E8%B5%AB%E5%85%B9%E6%BA%90%E6%8A%A5%E5%91%8A/image-20250312195947896.png" alt="image-20250312195947896" style="zoom:80%;"></p>
-<p><img src="/2025/03/12/%E7%A1%85%E5%9F%BA%E5%A4%AA%E8%B5%AB%E5%85%B9%E6%BA%90%E6%8A%A5%E5%91%8A/image-20250312200010374.png" alt="image-20250312200010374" style="zoom:80%;"></p>
-<p><img src="/2025/03/12/%E7%A1%85%E5%9F%BA%E5%A4%AA%E8%B5%AB%E5%85%B9%E6%BA%90%E6%8A%A5%E5%91%8A/image-20250312200022278.png" alt="image-20250312200022278" style="zoom:80%;"></p>
-<p><img src="/2025/03/12/%E7%A1%85%E5%9F%BA%E5%A4%AA%E8%B5%AB%E5%85%B9%E6%BA%90%E6%8A%A5%E5%91%8A/image-20250312200034381.png" alt="image-20250312200034381" style="zoom:80%;"></p>
-<p><img src="/2025/03/12/%E7%A1%85%E5%9F%BA%E5%A4%AA%E8%B5%AB%E5%85%B9%E6%BA%90%E6%8A%A5%E5%91%8A/image-20250312200047645.png" alt="image-20250312200047645" style="zoom:80%;"></p>
-<p><img src="/2025/03/12/%E7%A1%85%E5%9F%BA%E5%A4%AA%E8%B5%AB%E5%85%B9%E6%BA%90%E6%8A%A5%E5%91%8A/image-20250312200058679.png" alt="image-20250312200058679" style="zoom:80%;"></p>
-<p><img src="/2025/03/12/%E7%A1%85%E5%9F%BA%E5%A4%AA%E8%B5%AB%E5%85%B9%E6%BA%90%E6%8A%A5%E5%91%8A/image-20250312200108315.png" alt="image-20250312200108315" style="zoom:80%;"></p>
-<p><img src="/2025/03/12/%E7%A1%85%E5%9F%BA%E5%A4%AA%E8%B5%AB%E5%85%B9%E6%BA%90%E6%8A%A5%E5%91%8A/image-20250312200121116.png" alt="image-20250312200121116" style="zoom:80%;"></p>
-<p><img src="/2025/03/12/%E7%A1%85%E5%9F%BA%E5%A4%AA%E8%B5%AB%E5%85%B9%E6%BA%90%E6%8A%A5%E5%91%8A/image-20250312200132377.png" alt="image-20250312200132377" style="zoom:80%;"></p>
-<p><img src="/2025/03/12/%E7%A1%85%E5%9F%BA%E5%A4%AA%E8%B5%AB%E5%85%B9%E6%BA%90%E6%8A%A5%E5%91%8A/image-20250312200141017.png" alt="image-20250312200141017" style="zoom:80%;"></p>
-<p><img src="/2025/03/12/%E7%A1%85%E5%9F%BA%E5%A4%AA%E8%B5%AB%E5%85%B9%E6%BA%90%E6%8A%A5%E5%91%8A/image-20250312200151736.png" alt="image-20250312200151736" style="zoom:80%;"></p>
-<p><img src="/2025/03/12/%E7%A1%85%E5%9F%BA%E5%A4%AA%E8%B5%AB%E5%85%B9%E6%BA%90%E6%8A%A5%E5%91%8A/image-20250312200200829.png" alt="image-20250312200200829" style="zoom:80%;"></p>
-<p><img src="/2025/03/12/%E7%A1%85%E5%9F%BA%E5%A4%AA%E8%B5%AB%E5%85%B9%E6%BA%90%E6%8A%A5%E5%91%8A/image-20250312200210944.png" alt="image-20250312200210944" style="zoom:80%;"></p>
-<p><img src="/2025/03/12/%E7%A1%85%E5%9F%BA%E5%A4%AA%E8%B5%AB%E5%85%B9%E6%BA%90%E6%8A%A5%E5%91%8A/image-20250312200220142.png" alt="image-20250312200220142" style="zoom:80%;"></p>
-<p><img src="/2025/03/12/%E7%A1%85%E5%9F%BA%E5%A4%AA%E8%B5%AB%E5%85%B9%E6%BA%90%E6%8A%A5%E5%91%8A/image-20250312200241200.png" alt="image-20250312200241200" style="zoom:80%;"></p>
-<p><img src="/2025/03/12/%E7%A1%85%E5%9F%BA%E5%A4%AA%E8%B5%AB%E5%85%B9%E6%BA%90%E6%8A%A5%E5%91%8A/image-20250312200254775.png" alt="image-20250312200254775" style="zoom:80%;"></p>
-<p><img src="/2025/03/12/%E7%A1%85%E5%9F%BA%E5%A4%AA%E8%B5%AB%E5%85%B9%E6%BA%90%E6%8A%A5%E5%91%8A/image-20250312200307138.png" alt="image-20250312200307138" style="zoom:80%;"></p>
-<p><img src="/2025/03/12/%E7%A1%85%E5%9F%BA%E5%A4%AA%E8%B5%AB%E5%85%B9%E6%BA%90%E6%8A%A5%E5%91%8A/image-20250312200315672.png" alt="image-20250312200315672" style="zoom:80%;"></p>
-<p><img src="/2025/03/12/%E7%A1%85%E5%9F%BA%E5%A4%AA%E8%B5%AB%E5%85%B9%E6%BA%90%E6%8A%A5%E5%91%8A/image-20250312200324269.png" alt="image-20250312200324269" style="zoom:80%;"></p>
-<p><img src="/2025/03/12/%E7%A1%85%E5%9F%BA%E5%A4%AA%E8%B5%AB%E5%85%B9%E6%BA%90%E6%8A%A5%E5%91%8A/image-20250312200335544.png" alt="image-20250312200335544" style="zoom:80%;"></p>
-<p><img src="/2025/03/12/%E7%A1%85%E5%9F%BA%E5%A4%AA%E8%B5%AB%E5%85%B9%E6%BA%90%E6%8A%A5%E5%91%8A/image-20250312200354841.png" alt="image-20250312200354841" style="zoom:80%;"></p>
-]]></content>
-      <tags>
-        <tag>课程报告</tag>
       </tags>
   </entry>
 </search>
